@@ -53,6 +53,12 @@
       <div class="select-row">
         <label>年份<select id="f-year"></select></label>
         <label>管理人类型<select id="f-type"></select></label>
+        <label>登记状态<select id="f-reg">
+          <option value="">全部状态</option>
+          <option value="在册">协会公示·在册</option>
+          <option value="已注销">协会公示·已注销</option>
+          <option value="未查到">公示未查到</option>
+        </select></label>
         <label>地区<select id="f-region"></select></label>
         <label>文书类型<select id="f-doc"></select></label>
         <label>处分措施<select id="f-penalty"></select></label>
@@ -93,7 +99,8 @@
     <ul class="notes">
       <li>数据来源：中国证券投资基金业协会官网「自律管理 — 纪律处分 — 受处分机构」栏目，共 35 个列表页全量抓取。</li>
       <li>2015 年后为网页版决定书，2018 年后主要为扫描版 PDF，正文经 OCR 识别，<b>文字可能存在识别误差</b>，引用前请核对「查看原文」中的官方文件。</li>
-      <li>「管理人类型」「地区」「处分措施」「违规事由」为程序依据正文与机构名称自动标注，仅供参考，不构成法律意见。</li>
+      <li><b>管理人类型以协会公示系统为准</b>：逐机构比对基金业协会「私募基金管理人公示」（在册）与「已注销私募基金管理人公示」登记信息，匹配率 95%；无法确认的机构回退到正文推断。详情弹窗中的「协会公示」徽标与「协会公示信息」链接可跳转核对。</li>
+      <li>「地区」「处分措施」「违规事由」为程序依据正文与登记信息自动标注，仅供参考，不构成法律意见。</li>
       <li>本库仅作合规研究与内部风控参考，不代表监管机构立场。</li>
     </ul>
   </section>
@@ -115,7 +122,10 @@
     <div class="modal-meta" id="m-meta"></div>
     <div class="penalty-box" id="m-penalty"></div>
     <div class="modal-body"><pre id="m-text">正文加载中…</pre></div>
-    <div class="modal-foot"><a id="m-link" href="#" target="_blank" rel="noopener">查看协会原文 ↗</a></div>
+    <div class="modal-foot">
+      <a id="m-link" href="#" target="_blank" rel="noopener">查看协会原文 ↗</a>
+      <a id="m-reg" href="#" target="_blank" rel="noopener" hidden>协会公示信息 ↗</a>
+    </div>
   </div>
 </div>
 

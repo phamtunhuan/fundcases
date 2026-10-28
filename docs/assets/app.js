@@ -8,7 +8,7 @@
     (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
   const state = {
-    q: "", year: "", type: "", region: "", doc: "", penalty: "", violation: "", sort: "date-desc"
+    q: "", year: "", type: "", reg: "", region: "", doc: "", penalty: "", violation: "", sort: "date-desc"
   };
 
   function uniq(vals) {
@@ -52,6 +52,10 @@
     view = CASES.filter((c) => {
       if (state.year && String(c.year) !== state.year) return false;
       if (state.type && c.manager_type !== state.type) return false;
+      if (state.reg) {
+        const rs = c.registry_status || "未查到";
+        if (rs !== state.reg) return false;
+      }
       if (state.region && c.region !== state.region) return false;
       if (state.doc && c.doc_type !== state.doc) return false;
       if (state.penalty && !c.penalties.includes(state.penalty)) return false;
@@ -118,7 +122,7 @@
   }
 
   function renderChips() {
-    const labels = { year: "年份", type: "类型", region: "地区", doc: "文书", penalty: "措施", violation: "事由", q: "关键词" };
+    const labels = { year: "年份", type: "类型", reg: "登记状态", region: "地区", doc: "文书", penalty: "措施", violation: "事由", q: "关键词" };
     const items = Object.entries(state).filter(([k, v]) => v && k !== "sort").map(([k, v]) =>
       `<span class="chip">${labels[k]}：${esc(v)} <b data-k="${k}" style="cursor:pointer;color:#b8322c">×</b></span>`);
     $("#active-filters").innerHTML = items.join("") +
@@ -134,7 +138,7 @@
 
   function syncInputs() {
     $("#q").value = state.q; $("#f-year").value = state.year;
-    $("#f-type").value = state.type; $("#f-region").value = state.region;
+    $("#f-type").value = state.type; $("#f-reg").value = state.reg; $("#f-region").value = state.region;
     $("#f-doc").value = state.doc; $("#f-penalty").value = state.penalty;
     $("#f-violation").value = state.violation;
   }
@@ -142,12 +146,14 @@
   function renderStats() {
     const sec = CASES.filter((c) => c.manager_type.startsWith("私募证券")).length;
     const eq = CASES.filter((c) => c.manager_type.startsWith("私募股权")).length;
+    const reg = CASES.filter((c) => c.registry_status === "在册" || c.registry_status === "已注销").length;
     const regions = uniq(CASES.map((c) => c.region).filter(Boolean)).length;
     const years = CASES.map((c) => c.year);
     const stats = [
       ["案例总数", CASES.length],
       ["私募证券类", sec],
       ["私募股权创业类", eq],
+      ["协会公示匹配", reg],
       ["覆盖地区", regions],
       ["时间跨度", Math.min(...years) + "–" + Math.max(...years)]
     ];
@@ -190,7 +196,8 @@
   function bind() {
     $("#q").addEventListener("input", (e) => { state.q = e.target.value; apply(); });
     $("#clear-q").onclick = () => { $("#q").value = ""; state.q = ""; apply(); };
-    [["#f-year", "year"], ["#f-type", "type"], ["#f-region", "region"],
+    [["#f-year", "year"], ["#f-type", "type"], ["#f-reg", "reg"],
+     ["#f-region", "region"],
      ["#f-doc", "doc"], ["#f-penalty", "penalty"], ["#f-violation", "violation"],
      ["#f-sort", "sort"]].forEach(([sel, key]) =>
       $(sel).addEventListener("change", (e) => { state[key] = e.target.value; apply(); }));
@@ -212,15 +219,24 @@
     const c = CASES.find((x) => x.id === id);
     if (!c) return;
     $("#m-title").textContent = c.title;
+    const reg = c.registry_status
+      ? `<span class="reg-badge ${c.registry_status === "已注销" ? "reg-off" : "reg-on"}">协会公示·${esc(c.registry_status)}</span>`
+      : "";
     $("#m-meta").innerHTML = [
       `发布日期：${esc(c.date)}`, `文书类型：${esc(c.doc_type)}`,
       `管理人类型：${esc(c.manager_type)}（${esc(c.manager_type_source)}）`,
       `地区：${esc(c.region || "未识别")}`,
+      c.register_no ? `登记编号：${esc(c.register_no)}` : "",
+      c.legal_rep ? `法定代表人：${esc(c.legal_rep)}` : "",
+      c.member_type ? `会员类型：${esc(c.member_type)}` : "",
       c.penalties.length ? `处分：${esc(c.penalties.join("、"))}` : "",
       c.violation_tags.length ? `事由：${esc(c.violation_tags.join("、"))}` : "",
       `当事人：${esc(c.parties.join("、") || "—")}`
-    ].filter(Boolean).map((t) => `<span>${t}</span>`).join("");
+    ].filter(Boolean).map((t) => `<span>${t}</span>`).join("") + reg;
     $("#m-link").href = c.source_url;
+    const regLink = $("#m-reg");
+    if (c.registry_url) { regLink.hidden = false; regLink.href = c.registry_url; }
+    else regLink.hidden = true;
     $("#m-text").textContent = "正文加载中…";
     $("#m-penalty").innerHTML = c.penalty_text
       ? `<div class="pbox"><div class="ptitle">处分决定原文（用于核对措施标注）</div>

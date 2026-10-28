@@ -242,6 +242,33 @@ BUREAU_MAP = {
 ALL_PLACES = sorted(PROVINCES + CITIES, key=len, reverse=True)
 
 
+# 协会公示返回的省级全称 -> 案例库使用的简称
+PROVINCE_SHORT = {
+    "北京市": "北京", "天津市": "天津", "上海市": "上海", "重庆市": "重庆",
+    "河北省": "河北", "山西省": "山西", "辽宁省": "辽宁", "吉林省": "吉林",
+    "黑龙江省": "黑龙江", "江苏省": "江苏", "浙江省": "浙江", "安徽省": "安徽",
+    "福建省": "福建", "江西省": "江西", "山东省": "山东", "河南省": "河南",
+    "湖北省": "湖北", "湖南省": "湖南", "广东省": "广东", "海南省": "海南",
+    "四川省": "四川", "贵州省": "贵州", "云南省": "云南", "陕西省": "陕西",
+    "甘肃省": "甘肃", "青海省": "青海", "台湾省": "台湾",
+    "内蒙古自治区": "内蒙古", "广西壮族自治区": "广西", "西藏自治区": "西藏",
+    "宁夏回族自治区": "宁夏", "新疆维吾尔自治区": "新疆",
+    "香港特别行政区": "香港", "澳门特别行政区": "澳门",
+}
+
+def place_from_address(addr: str) -> str:
+    """从登记地址提取地区：优先城市（含直辖市），其次省份。"""
+    if not addr:
+        return ""
+    for p in sorted(CITIES, key=len, reverse=True):
+        if p in addr:
+            return p
+    for p in PROVINCES:
+        if p in addr:
+            return p
+    return ""
+
+
 def guess_region(text: str, parties, org: str) -> str:
     """优先级：监管局抄送 > 正文监管局 > 机构名所在地 > 正文省市"""
     m = re.search(r'抄送[：:]?[^。\n]{0,80}?'
@@ -419,6 +446,41 @@ def classify_manager_type(text: str, org_name: str):
     return "未明确", "证据不足"
 
 
+REGISTRY_PATH = ROOT / "data" / "manager_types.json"
+REGISTRY = {}
+if REGISTRY_PATH.exists():
+    try:
+        REGISTRY = json.load(open(REGISTRY_PATH, encoding="utf-8"))
+    except Exception:  # noqa: BLE001
+        REGISTRY = {}
+
+
+def registry_lookup(org_name: str):
+    """协会公示系统查询结果：机构名 -> 权威登记信息。"""
+    if not org_name:
+        return None
+    r = REGISTRY.get(org_name)
+    if r:
+        return r
+    # 归一化后再试一次（括号/空格差异）
+    key = org_name.replace("（", "(").replace("）", ")").replace(" ", "")
+    for k, v in REGISTRY.items():
+        if k.replace("（", "(").replace("）", ")").replace(" ", "") == key:
+            return v
+    return None
+
+
+def classify_with_registry(text: str, org_name: str):
+    """优先采用协会公示的登记类型，未命中再回退到正文启发式。"""
+    r = registry_lookup(org_name)
+    if r and r.get("manager_type"):
+        status = r.get("status", "")
+        src = f"协会公示（{status}）" if status else "协会公示"
+        return r["manager_type"], src, r
+    label, src = classify_manager_type(text, org_name)
+    return label, src, r
+
+
 def local_path(url: str, idx: int):
     from urllib.parse import unquote
     base = unquote(url.rsplit("/", 1)[-1])
@@ -465,10 +527,22 @@ def main():
         org = orgs[0] if orgs else (
             max(parties, key=len) if parties else "")
 
-        manager_type, type_source = classify_manager_type(norm, org)
+        manager_type, type_source, reg = classify_with_registry(norm, org)
         penalties = detect_penalties(norm)
         violations = [l for l, pat in VIOLATION_RULES if re.search(pat, norm)]
         region = guess_region(norm, parties, org)
+        if not region and reg:
+            for k in ("register_province", "office_province",
+                      "register_address", "office_address"):
+                v = (reg.get(k) or "").strip()
+                if not v:
+                    continue
+                if len(v) <= 6:                      # 省级全称/简称
+                    region = PROVINCE_SHORT.get(v, v)
+                else:                                # 完整地址，提取省市
+                    region = place_from_address(v)
+                if region:
+                    break
 
         cases.append({
             "id": idx + 1,
@@ -483,6 +557,13 @@ def main():
             "org_primary": org,
             "manager_type": manager_type,
             "manager_type_source": type_source,
+            "registry_status": (reg or {}).get("status", ""),
+            "registry_match_score": (reg or {}).get("match_score"),
+            "register_no": (reg or {}).get("register_no", ""),
+            "legal_rep": (reg or {}).get("legal_rep", ""),
+            "member_type": (reg or {}).get("member_type", ""),
+            "fund_count": (reg or {}).get("fund_count"),
+            "registry_url": (reg or {}).get("detail_url", ""),
             "region": region,
             "penalties": penalties,
             "penalty_text": "；".join(penalty_sentences(norm))[:600],

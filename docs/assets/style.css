@@ -99,6 +99,11 @@ table.cases tbody tr:hover{background:#f9fbfe}
 .pbox{background:#fdf6f5;border:1px solid #f3ddd9;border-left:3px solid #b8322c;border-radius:6px;padding:10px 12px;margin:12px 0 0}
 .ptitle{font-size:12px;color:#b8322c;font-weight:600;margin-bottom:5px}
 .ptext{font-size:13px;color:#3b2a28;line-height:1.75;word-break:break-word}
+/* 协会公示状态徽标 */
+.reg-badge{display:inline-block;margin-left:8px;padding:1px 8px;border-radius:9px;font-size:11px;font-weight:600;vertical-align:1px}
+.reg-on{background:#e8f2ea;color:#2e6b3e;border:1px solid #c4ddca}
+.reg-off{background:#f4e6d9;color:#9a5b21;border:1px solid #e3c9a8}
+.modal-foot a{margin-right:16px}
 .modal-body{padding:14px 20px;overflow:auto}
 .modal-body pre{margin:0;white-space:pre-wrap;word-break:break-word;font:13.5px/1.85 "PingFang SC","Microsoft YaHei",monospace;color:var(--ink)}
 .modal-foot{padding:12px 20px;border-top:1px solid var(--line);text-align:right}
