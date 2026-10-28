@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>私募处罚案例库</title>
+<meta name="description" content="私募基金行政处罚、监管措施与自律处分案例检索">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <h1>私募处罚案例库</h1>
+    <p class="lede">检索证监会、证监局、中基协等机构公开的私募基金处罚与监管案例。</p>
+    <div class="searchbar">
+      <input id="q" type="search" placeholder="搜索机构名、案由、法条、文号…" aria-label="搜索案例" autocomplete="off">
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div id="sample-note" class="note" hidden>当前为示例数据（机构与案情均为虚构），请在 data/cases.json 中替换为真实案例。</div>
+
+  <section class="filters" aria-label="筛选">
+    <label>年份<select id="f-year"></select></label>
+    <label>处罚机关<select id="f-authority"></select></label>
+    <label>措施类型<select id="f-measure"></select></label>
+    <label>违规类型<select id="f-violation"></select></label>
+    <label>排序
+      <select id="f-sort">
+        <option value="date-desc">日期：新到旧</option>
+        <option value="date-asc">日期：旧到新</option>
+        <option value="fine-desc">罚款：高到低</option>
+      </select>
+    </label>
+    <button id="reset" type="button">重置</button>
+  </section>
+
+  <p id="stats" class="stats" aria-live="polite"></p>
+  <ol id="list" class="list"></ol>
+  <p id="empty" class="empty" hidden>没有符合条件的案例。试试减少筛选条件，或换个关键词。</p>
+</main>
+
+<dialog id="detail" aria-labelledby="d-title">
+  <article>
+    <button class="close" id="d-close" type="button" aria-label="关闭">×</button>
+    <p class="meta" id="d-meta"></p>
+    <h2 id="d-title"></h2>
+    <dl id="d-body"></dl>
+    <p><a id="d-src" target="_blank" rel="noopener noreferrer">查看官方原文</a></p>
+  </article>
+</dialog>
+
+<footer class="wrap foot">
+  数据整理自公开信息，仅供研究参考，请以官方原文为准。
+</footer>
+<script src="assets/app.js"></script>
+</body>
+</html>
