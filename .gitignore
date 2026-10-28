@@ -1,0 +1,6 @@
+# 大体积中间产物，不入库（可用脚本重建）
+data/raw/
+data/ocr/
+__pycache__/
+*.pyc
+.DS_Store

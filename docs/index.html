@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>私募基金监管处罚案例库 | 中国证券投资基金业协会纪律处分</title>
+<meta name="description" content="收录中国证券投资基金业协会纪律处分（受处分机构）全量案例，支持按机构、年份、地区、违规类型、处分措施检索。">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <div class="brand">
+      <h1>私募基金监管处罚案例库</h1>
+      <p class="sub">中国证券投资基金业协会 · 自律管理 / 纪律处分 / 受处分机构</p>
+    </div>
+    <div class="meta">数据更新：<span id="update-date">—</span> ｜ 共 <b id="total-count">0</b> 例</div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="stat-row" id="stat-row"></section>
+
+  <section class="panel">
+    <div class="panel-head">
+      <h2>年度处罚趋势</h2>
+      <span class="hint">按决定书发布日期统计</span>
+    </div>
+    <div class="bar-chart" id="year-chart"></div>
+  </section>
+
+  <section class="grid-2">
+    <div class="panel">
+      <div class="panel-head"><h2>处分措施分布</h2><span class="hint">同一案例可含多项</span></div>
+      <div class="h-bars" id="penalty-chart"></div>
+    </div>
+    <div class="panel">
+      <div class="panel-head"><h2>高发违规事由 TOP 10</h2><span class="hint">正文关键词自动标注</span></div>
+      <div class="h-bars" id="violation-chart"></div>
+    </div>
+  </section>
+
+  <section class="panel" id="browse">
+    <div class="panel-head">
+      <h2>案例检索</h2>
+      <span class="hint">支持机构名称、当事人、正文关键词</span>
+    </div>
+    <div class="filters">
+      <div class="search-box">
+        <input type="search" id="q" placeholder="搜索机构名称 / 当事�� / 违规关键词（如：适当性、挪用、量化）">
+        <button id="clear-q" type="button">重置</button>
+      </div>
+      <div class="select-row">
+        <label>年份<select id="f-year"></select></label>
+        <label>管理人类型<select id="f-type"></select></label>
+        <label>地区<select id="f-region"></select></label>
+        <label>文书类型<select id="f-doc"></select></label>
+        <label>处分措施<select id="f-penalty"></select></label>
+        <label>违规事由<select id="f-violation"></select></label>
+        <label>排序<select id="f-sort">
+          <option value="date-desc">日期（新→旧）</option>
+          <option value="date-asc">日期（旧→新）</option>
+          <option value="org">机构名称</option>
+        </select></label>
+      </div>
+      <div class="chips" id="active-filters"></div>
+    </div>
+    <div class="result-bar">
+      <span id="result-count">—</span>
+      <div class="pager" id="pager"></div>
+    </div>
+    <div class="table-wrap">
+      <table class="cases">
+        <thead>
+          <tr>
+            <th style="width:100px">日期</th>
+            <th>机构 / 当事人</th>
+            <th style="width:150px">管理人类型</th>
+            <th style="width:70px">地区</th>
+            <th style="width:170px">处分措施</th>
+            <th>违规事由</th>
+            <th style="width:70px">原文</th>
+          </tr>
+        </thead>
+        <tbody id="case-tbody"></tbody>
+      </table>
+    </div>
+    <div class="pager bottom" id="pager2"></div>
+  </section>
+
+  <section class="panel">
+    <div class="panel-head"><h2>数据说明</h2></div>
+    <ul class="notes">
+      <li>数据来源：中国证券投资基金业协会官网「自律管理 — 纪律处分 — 受处分机构」栏目，共 35 个列表页全量抓取。</li>
+      <li>2015 年后为网页版决定书，2018 年后主要为扫描版 PDF，正文经 OCR 识别，<b>文字可能存在识别误差</b>，引用前请核对「查看原文」中的官方文件。</li>
+      <li>「管理人类型」「地区」「处分措施」「违规事由」为程序依据正文与机构名称自动标注，仅供参考，不构成法律意见。</li>
+      <li>本库仅作合规研究与内部风控参考，不代表监管机构立场。</li>
+    </ul>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <span>私募基金监管处罚案例库</span>
+    <a id="src-link" href="https://www.amac.org.cn/zlgl/jlcf/scfjg/index.html" target="_blank" rel="noopener">官方数据来源 ↗</a>
+  </div>
+</footer>
+
+<div class="modal" id="modal" hidden>
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3 id="m-title"></h3>
+      <button id="m-close" type="button" aria-label="关闭">×</button>
+    </div>
+    <div class="modal-meta" id="m-meta"></div>
+    <div class="modal-body"><pre id="m-text">正文加载中…</pre></div>
+    <div class="modal-foot"><a id="m-link" href="#" target="_blank" rel="noopener">查看协会原文 ↗</a></div>
+  </div>
+</div>
+
+<script src="assets/app.js"></script>
+</body>
+</html>
