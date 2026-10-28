@@ -222,6 +222,10 @@
     ].filter(Boolean).map((t) => `<span>${t}</span>`).join("");
     $("#m-link").href = c.source_url;
     $("#m-text").textContent = "正文加载中…";
+    $("#m-penalty").innerHTML = c.penalty_text
+      ? `<div class="pbox"><div class="ptitle">处分决定原文（用于核对措施标注）</div>
+           <div class="ptext">${esc(c.penalty_text)}</div></div>`
+      : "";
     $("#modal").hidden = false;
 
     const show = (t) => {

@@ -13,7 +13,9 @@ cases = json.loads(SRC.read_text(encoding="utf-8"))
 index, texts = [], {}
 for c in cases:
     texts[str(c["id"])] = c["text"]
-    index.append({k: v for k, v in c.items() if k != "text"})
+    # decision_text 与正文高度重复，不进索引（仍保留在完整 JSON 中）
+    index.append({k: v for k, v in c.items()
+                  if k not in ("text", "decision_text")})
 
 (DOCS / "cases.json").write_text(
     json.dumps(index, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
