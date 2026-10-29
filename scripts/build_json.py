@@ -653,15 +653,49 @@ def registry_lookup(org_name: str):
     return None
 
 
+# ============================================================
+# 管理人类型：统一收敛为 5 个固定取值
+# ============================================================
+MANAGER_TYPES = [
+    "私募证券投资基金管理人",
+    "私募股权、创业投资基金管理人",
+    "其他私募投资基金管理人",
+    "私募资产配置类管理人",
+    "未填报管理人类型",
+]
+# 协会旧口径 / 启发式 / 非私募标注 -> 标准五类
+_TYPE_NORMALIZE = {
+    "私募股权投资基金管理人": "私募股权、创业投资基金管理人",
+    "创业投资基金管理人": "私募股权、创业投资基金管理人",
+    "未明确": "未填报管理人类型",
+    "证据不足": "未填报管理人类型",
+}
+
+
+def normalize_manager_type(raw: str) -> str:
+    """把任意类型值收敛到 5 个固定取值。非私募对象（公募/券商/销售机构）
+    不在私募名录内，归入「未填报管理人类型」。"""
+    t = (raw or "").strip()
+    if t in MANAGER_TYPES:
+        return t
+    t = _TYPE_NORMALIZE.get(t, t)
+    if t in MANAGER_TYPES:
+        return t
+    # 「非私募管理人（...）」等带括号的标注
+    if t.startswith("非私募") or t.startswith("未填报"):
+        return "未填报管理人类型"
+    return "未填报管理人类型"
+
+
 def classify_with_registry(text: str, org_name: str):
     """优先采用协会公示的登记类型，未命中再回退到正文启发式。"""
     r = registry_lookup(org_name)
     if r and r.get("manager_type"):
         status = r.get("status", "")
         src = f"协会公示（{status}）" if status else "协会公示"
-        return r["manager_type"], src, r
+        return normalize_manager_type(r["manager_type"]), src, r
     label, src = classify_manager_type(text, org_name)
-    return label, src, r
+    return normalize_manager_type(label), src, r
 
 
 def local_path(url: str, idx: int):

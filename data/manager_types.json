@@ -462,9 +462,22 @@
   "detail_url": "https://gs.amac.org.cn/amac-infodisc/res/pof/manager/101000029466.html"
  },
  "上海垒盈投资管理有限公司": {
-  "manager_type": "",
-  "status": "未查到",
-  "source": "not_found"
+  "matched_name": "上海垒盈私募基金管理有限公司",
+  "manager_type": "私募证券投资基金管理人",
+  "match_score": 0.9,
+  "status": "在册",
+  "register_no": "P1034005",
+  "legal_rep": "刘博",
+  "member_type": "普通会员",
+  "fund_count": 35,
+  "register_province": "上海市",
+  "office_province": "上海市",
+  "office_address": "上海市徐汇区龙文路199号12层1201室(名义楼层15层)",
+  "register_date": 1475107200000,
+  "source": "amac_registry_active",
+  "detail_url": "https://gs.amac.org.cn/amac-infodisc/res/pof/manager/101000043508.html",
+  "alias_of": "垒盈",
+  "note": "核心字号「垒盈」命中，疑似更名（原登记名 上海垒盈投资管理有限公司）"
  },
  "上海复熙资产管理有限公司": {
   "matched_name": "上海复熙资产管理有限公司",
@@ -758,9 +771,22 @@
   "register_province": "上海市上海市静安区南京西路1266号2幢802室"
  },
  "上海朴道瑞富投资管理中心（有限合伙）": {
-  "manager_type": "",
-  "status": "未查到",
-  "source": "not_found"
+  "matched_name": "上海朴道瑞富私募基金管理中心（有限合伙）",
+  "manager_type": "私募证券投资基金管理人",
+  "match_score": 0.9,
+  "status": "在册",
+  "register_no": "P1002456",
+  "legal_rep": "项炜",
+  "member_type": "观察会员",
+  "fund_count": 6,
+  "register_province": "上海市",
+  "office_province": "上海市",
+  "office_address": "上海市静安区南京西路1266号恒隆广场2座801室",
+  "register_date": 1401062400000,
+  "source": "amac_registry_active",
+  "detail_url": "https://gs.amac.org.cn/amac-infodisc/res/pof/manager/101000000618.html",
+  "alias_of": "朴道瑞富",
+  "note": "核心字号「朴道瑞富」命中，疑似更名（原登记名 上海朴道瑞富投资管理中心（有限合伙））"
  },
  "上海杏泽投资管理有限公司": {
   "matched_name": "上海杏泽投资管理有限公司",
@@ -962,9 +988,22 @@
   "register_province": "上海市上海市嘉定区福海路1011号3幢B区1368室"
  },
  "上海添橙投资管理有限公司": {
-  "manager_type": "",
-  "status": "未查到",
-  "source": "not_found"
+  "matched_name": "上海添橙私募基金管理有限公司",
+  "manager_type": "私募证券投资基金管理人",
+  "match_score": 0.9,
+  "status": "在册",
+  "register_no": "P1031624",
+  "legal_rep": "张宏超",
+  "member_type": "观察会员",
+  "fund_count": 67,
+  "register_province": "上海市",
+  "office_province": "上海市",
+  "office_address": "上海市静安区南京西路758号汇银大厦1401室",
+  "register_date": 1465344000000,
+  "source": "amac_registry_active",
+  "detail_url": "https://gs.amac.org.cn/amac-infodisc/res/pof/manager/101000027713.html",
+  "alias_of": "添橙",
+  "note": "核心字号「添橙」命中，疑似更名（原登记名 上海添橙投资管理有限公司）"
  },
  "上海湘三投资管理有限公司": {
   "matched_name": "上海湘三投资管理有限公司",
@@ -1912,9 +1951,17 @@
   "alias_of": "湖南伟大股权投资基金管理有限公司"
  },
  "佰仕信（上海）股权投资基金管理有限公司": {
-  "manager_type": "",
-  "status": "未查到",
-  "source": "not_found"
+  "matched_name": "佰仕信(上海)股权投资基金管理有限公司",
+  "manager_type": "其他私募投资基金管理人",
+  "match_score": 1.0,
+  "status": "已注销",
+  "cancel_date": 1711324800000,
+  "source": "amac_registry_cancelled",
+  "detail_url": "https://gs.amac.org.cn/amac-infodisc/res/cancelled/manager/101000002205.html",
+  "cancel_type": "协会注销",
+  "register_province": "上海市上海市宝山区崇明县潘园公路1800号2号楼2981室",
+  "alias_of": "佰仕信(上海)股权投资基金管理有限公司",
+  "note": "经变体「佰仕信(上海)股权投资基金管理有限公司」命中"
  },
  "信泉和业（济南）私募基金管理有限公司": {
   "manager_type": "",
@@ -2890,14 +2937,40 @@
   "detail_url": "https://gs.amac.org.cn/amac-infodisc/res/pof/manager/1610202107103582.html"
  },
  "厦门京道产业投资管理有限公司": {
-  "manager_type": "",
-  "status": "未查到",
-  "source": "not_found"
+  "matched_name": "北京道赋私募基金管理有限公司",
+  "manager_type": "私募股权、创业投资基金管理人",
+  "match_score": 0.9,
+  "status": "在册",
+  "register_no": "P1073991",
+  "legal_rep": "张宇",
+  "member_type": "非会员机构",
+  "fund_count": 3,
+  "register_province": "北京市",
+  "office_province": "北京市",
+  "office_address": "北京市西城区北京市西城区西绒线胡同天安国汇1805",
+  "register_date": 1662422400000,
+  "source": "amac_registry_active",
+  "detail_url": "https://gs.amac.org.cn/amac-infodisc/res/pof/manager/2111231428100916.html",
+  "alias_of": "京道",
+  "note": "核心字号「京道」命中，疑似更名（原登记名 厦门京道产业投资管理有限公司）"
  },
  "厦门国贸资产管理有限公司": {
-  "manager_type": "",
-  "status": "未查到",
-  "source": "not_found"
+  "matched_name": "国贸创领（上海）私募基金管理有限公司",
+  "manager_type": "私募股权、创业投资基金管理人",
+  "match_score": 0.9,
+  "status": "在册",
+  "register_no": "P1075039",
+  "legal_rep": "龚家新",
+  "member_type": "非会员机构",
+  "fund_count": 1,
+  "register_province": "上海市",
+  "office_province": "上海市",
+  "office_address": "上海市浦东新区东方路1267弄8号陆家嘴金融服务广场二期13号楼17层03单元",
+  "register_date": 1759190400000,
+  "source": "amac_registry_active",
+  "detail_url": "https://gs.amac.org.cn/amac-infodisc/res/pof/manager/2307311808102603.html",
+  "alias_of": "国贸",
+  "note": "核心字号「国贸」命中，疑似更名（原登记名 厦门国贸资产管理有限公司）"
  },
  "厦门思斉投资管理有限公司": {
   "matched_name": "厦门思斉投资管理有限公司",
@@ -3024,9 +3097,22 @@
   "register_province": "安徽省合肥市庐阳区庐阳产业园清河路9号"
  },
  "君信达私募基金管理（深圳）有限公司": {
-  "manager_type": "",
-  "status": "未查到",
-  "source": "not_found"
+  "matched_name": "君信达私募股权基金管理（深圳）有限公司",
+  "manager_type": "私募股权、创业投资基金管理人",
+  "match_score": 0.9,
+  "status": "在册",
+  "register_no": "P1060592",
+  "legal_rep": "郑星",
+  "member_type": "非会员机构",
+  "fund_count": 29,
+  "register_province": "广东省",
+  "office_province": "广东省",
+  "office_address": "广东省深圳市南山区科兴科学园B栋3单元3楼16单元",
+  "register_date": 1482451200000,
+  "source": "amac_registry_active",
+  "detail_url": "https://gs.amac.org.cn/amac-infodisc/res/pof/manager/1610191910101649.html",
+  "alias_of": "君信达",
+  "note": "核心字号「君信达」命中，疑似更名（原登记名 君信达私募基金管理（深圳）有限公司）"
  },
  "和合资产管理（上海）有限公司": {
   "matched_name": "和合资产管理（上海）有限公司",
@@ -3454,9 +3540,22 @@
   "detail_url": "https://gs.amac.org.cn/amac-infodisc/res/pof/manager/1809251121105003.html"
  },
  "寿宁投资管理（上海）有限公司": {
-  "manager_type": "",
-  "status": "未查到",
-  "source": "not_found"
+  "matched_name": "寿宁投资管理(上海)有限公司",
+  "manager_type": "私募证券投资基金管理人",
+  "match_score": 1.0,
+  "status": "在册",
+  "register_no": "P1017558",
+  "legal_rep": "陈永卿",
+  "member_type": "观察会员",
+  "fund_count": 45,
+  "register_province": "上海市",
+  "office_province": "上海市",
+  "office_address": "上海市浦东新区上海浦东环科路515号1号楼208室",
+  "register_date": 1436400000000,
+  "source": "amac_registry_active",
+  "detail_url": "https://gs.amac.org.cn/amac-infodisc/res/pof/manager/101000025196.html",
+  "alias_of": "寿宁投资管理(上海)有限公司",
+  "note": "经变体「寿宁投资管理(上海)有限公司」命中"
  },
  "山东一鼎基金管理有限公司": {
   "matched_name": "山东一鼎基金管理有限公司",
@@ -4019,14 +4118,30 @@
   "register_province": "四川省成都市武侯区高新区"
  },
  "新毅投资": {
-  "manager_type": "",
-  "status": "未查到",
-  "source": "not_found"
+  "matched_name": "新毅资产管理股份有限公司",
+  "manager_type": "私募证券投资基金管理人",
+  "match_score": 0.9,
+  "status": "已注销",
+  "cancel_date": 1719532800000,
+  "source": "amac_registry_cancelled",
+  "detail_url": "https://gs.amac.org.cn/amac-infodisc/res/cancelled/manager/101000002306.html",
+  "cancel_type": "协会注销",
+  "register_province": "北京市北京市朝阳区东四环中路82号3座25层2901",
+  "alias_of": "新毅",
+  "note": "核心字号「新毅」命中，疑似更名（原登记名 新毅投资）"
  },
  "新毅投资基金管理（北京）有限公司": {
-  "manager_type": "",
-  "status": "未查到",
-  "source": "not_found"
+  "matched_name": "新毅资产管理股份有限公司",
+  "manager_type": "私募证券投资基金管理人",
+  "match_score": 0.9,
+  "status": "已注销",
+  "cancel_date": 1719532800000,
+  "source": "amac_registry_cancelled",
+  "detail_url": "https://gs.amac.org.cn/amac-infodisc/res/cancelled/manager/101000002306.html",
+  "cancel_type": "协会注销",
+  "register_province": "北京市北京市朝阳区东四环中路82号3座25层2901",
+  "alias_of": "新毅",
+  "note": "核心字号「新毅」命中，疑似更名（原登记名 新毅投资基金管理（北京）有限公司）"
  },
  "新毅资产": {
   "matched_name": "新毅资产管理股份有限公司",
@@ -4089,9 +4204,22 @@
   "register_province": "浙江省杭州市上城区上城区甘水巷152号126室"
  },
  "晋江壹点纳锦资产管理有限公司": {
-  "manager_type": "",
-  "status": "未查到",
-  "source": "not_found"
+  "matched_name": "壹点纳锦（泉州）私募基金管理有限公司",
+  "manager_type": "私募证券投资基金管理人",
+  "match_score": 0.9,
+  "status": "在册",
+  "register_no": "P1070196",
+  "legal_rep": "何玉清",
+  "member_type": "非会员机构",
+  "fund_count": 25,
+  "register_province": "福建省",
+  "office_province": "福建省",
+  "office_address": "福建省泉州市丰泽区普贤路821号4楼",
+  "register_date": 1569283200000,
+  "source": "amac_registry_active",
+  "detail_url": "https://gs.amac.org.cn/amac-infodisc/res/pof/manager/1904101618107787.html",
+  "alias_of": "壹点纳锦",
+  "note": "核心字号「壹点纳锦」命中，疑似更名（原登记名 晋江壹点纳锦资产管理有限公司）"
  },
  "晟孚投资有限公司": {
   "matched_name": "晟孚投资有限公司",
@@ -4839,9 +4967,22 @@
   "detail_url": "https://gs.amac.org.cn/amac-infodisc/res/pof/manager/2201140942104348.html"
  },
  "涵崧资产管理（珠海）有限责任公司": {
-  "manager_type": "",
-  "status": "未查到",
-  "source": "not_found"
+  "matched_name": "珠海涵崧私募股权基金管理有限公司",
+  "manager_type": "私募股权、创业投资基金管理人",
+  "match_score": 0.9,
+  "status": "在册",
+  "register_no": "P1064587",
+  "legal_rep": "陈新立",
+  "member_type": "非会员机构",
+  "fund_count": 25,
+  "register_province": "广东省",
+  "office_province": "广东省",
+  "office_address": "广东省深圳市福田区益田路6009号新世界商务中心1703室",
+  "register_date": 1504742400000,
+  "source": "amac_registry_active",
+  "detail_url": "https://gs.amac.org.cn/amac-infodisc/res/pof/manager/1707051850106183.html",
+  "alias_of": "涵崧",
+  "note": "核心字号「涵崧」命中，疑似更名（原登记名 涵崧资产管理（珠海）有限责任公司）"
  },
  "深圳万鼎富通股权投资管理有限公司": {
   "matched_name": "深圳万鼎富通股权投资管理有限公司",
@@ -5409,9 +5550,22 @@
   "register_province": "广东省深圳市福田区福田街道福华路355号（金田路与福华路交汇处）皇庭大厦28楼"
  },
  "深圳市恒泰永成投资管理有限公司": {
-  "manager_type": "",
-  "status": "未查到",
-  "source": "not_found"
+  "matched_name": "深圳市恒泰永成私募证券基金管理有限公司",
+  "manager_type": "私募证券投资基金管理人",
+  "match_score": 0.9,
+  "status": "在册",
+  "register_no": "P1064836",
+  "legal_rep": "陈新立",
+  "member_type": "观察会员",
+  "fund_count": 5,
+  "register_province": "广东省",
+  "office_province": "广东省",
+  "office_address": "广东省深圳市福田区莲花街道福新社区益田路6009号新世界商务中心1704",
+  "register_date": 1505260800000,
+  "source": "amac_registry_active",
+  "detail_url": "https://gs.amac.org.cn/amac-infodisc/res/pof/manager/1707121516101846.html",
+  "alias_of": "市恒泰永成",
+  "note": "核心字号「市恒泰永成」命中，疑似更名（原登记名 深圳市恒泰永成投资管理有限公司）"
  },
  "深圳市斯沃普资产管理有限公司": {
   "matched_name": "深圳市斯沃普资产管理有限公司",
@@ -5746,9 +5900,22 @@
   "register_province": "广东省深圳市南山区前海深港合作区前湾一路1号A栋201室（入驻深圳市前海商务秘书有限公司）"
  },
  "深圳海田投资管理有限公司": {
-  "manager_type": "",
-  "status": "未查到",
-  "source": "not_found"
+  "matched_name": "上海田仆资产管理合伙企业（有限合伙）",
+  "manager_type": "私募股权、创业投资基金管理人",
+  "match_score": 0.9,
+  "status": "在册",
+  "register_no": "P1026238",
+  "legal_rep": "任重",
+  "member_type": "观察会员",
+  "fund_count": 6,
+  "register_province": "上海市",
+  "office_province": "上海市",
+  "office_address": "上海市徐汇区龙耀路18号阿里巴巴徐汇滨江园区X2栋502A单元",
+  "register_date": 1446595200000,
+  "source": "amac_registry_active",
+  "detail_url": "https://gs.amac.org.cn/amac-infodisc/res/pof/manager/101000036218.html",
+  "alias_of": "海田",
+  "note": "核心字号「海田」命中，疑似更名（原登记名 深圳海田投资管理有限公司）"
  },
  "深圳深国融前海金融管理股份公司": {
   "matched_name": "深圳深国融前海金融管理股份公司",
@@ -5833,9 +6000,17 @@
   "register_province": "广东省深圳市南山区前海深港合作区前湾一路1号A栋201室（入驻深圳市前海商务秘书有限公司）"
  },
  "深圳鑫然投资管理有限公司": {
-  "manager_type": "",
-  "status": "未查到",
-  "source": "not_found"
+  "matched_name": "深圳鑫然私募证券投资基金管理有限公司",
+  "manager_type": "私募证券投资基金管理人",
+  "match_score": 0.9,
+  "status": "已注销",
+  "cancel_date": 1727049600000,
+  "source": "amac_registry_cancelled",
+  "detail_url": "https://gs.amac.org.cn/amac-infodisc/res/cancelled/manager/101000041988.html",
+  "cancel_type": "主动注销",
+  "register_province": "广东省深圳市南山区深圳市福田区沙头街道天安社区深南路与广深高速公路交汇处东南侧大庆大厦17层东侧17A",
+  "alias_of": "鑫然",
+  "note": "核心字号「鑫然」命中，疑似更名（原登记名 深圳鑫然投资管理有限公司）"
  },
  "深圳陆羽基金管理有限公司": {
   "matched_name": "深圳陆羽基金管理有限公司",
@@ -5957,9 +6132,22 @@
   "register_province": "北京市北京市朝阳区朝外雅宝路12号19层1901内1"
  },
  "珠海市聚隆投资管理有限公司": {
-  "manager_type": "",
-  "status": "未查到",
-  "source": "not_found"
+  "matched_name": "珠海市聚隆私募基金管理有限公司",
+  "manager_type": "私募证券投资基金管理人",
+  "match_score": 0.9,
+  "status": "在册",
+  "register_no": "P1022827",
+  "legal_rep": "刘凯",
+  "member_type": "非会员机构",
+  "fund_count": 17,
+  "register_province": "广东省",
+  "office_province": "广东省",
+  "office_address": "广东省珠海市香洲区横琴粤澳深度合作区荣珠道191号写字楼804房-1",
+  "register_date": 1441843200000,
+  "source": "amac_registry_active",
+  "detail_url": "https://gs.amac.org.cn/amac-infodisc/res/pof/manager/101000031774.html",
+  "alias_of": "市聚隆",
+  "note": "核心字号「市聚隆」命中，疑似更名（原登记名 珠海市聚隆投资管理有限公司）"
  },
  "珠海有容私募基金管理有限公司": {
   "matched_name": "珠海有容私募基金管理有限公司",
@@ -6059,9 +6247,17 @@
   "register_province": "广东省珠海市香洲区横琴新区宝华路6号105室-49849（集中办公区）"
  },
  "睿金众合（武汉）股权投资中心（有限合伙）": {
-  "manager_type": "",
-  "status": "未查到",
-  "source": "not_found"
+  "matched_name": "睿金众合（武汉）股权投资中心（有限合伙)",
+  "manager_type": "私募股权、创业投资基金管理人",
+  "match_score": 0.9,
+  "status": "已注销",
+  "cancel_date": 1755820800000,
+  "source": "amac_registry_cancelled",
+  "detail_url": "https://gs.amac.org.cn/amac-infodisc/res/cancelled/manager/101000045099.html",
+  "cancel_type": "协会注销",
+  "register_province": "湖北省武汉市null东湖新技术开发区关东科技工业园华光大道18号高科大厦4层05室（Y）",
+  "alias_of": "睿金众合",
+  "note": "核心字号「睿金众合」命中，疑似更名（原登记名 睿金众合（武汉）股权投资中心（有限合伙））"
  },
  "福建冠城资产管理有限公司": {
   "matched_name": "福建冠城资产管理有限公司",
@@ -6178,9 +6374,22 @@
   "register_province": "福建省福州市仓山区福州市仓山区林浦路与潘墩路交汇处E6#楼第15层01、02、03、04、05、06、07、08房间"
  },
  "米多资产": {
-  "manager_type": "",
-  "status": "未查到",
-  "source": "not_found"
+  "matched_name": "米多（北京）资产管理有限公司",
+  "manager_type": "其他私募投资基金管理人",
+  "match_score": 0.9,
+  "status": "在册",
+  "register_no": "P1014620",
+  "legal_rep": "王晰",
+  "member_type": "非会员机构",
+  "fund_count": 34,
+  "register_province": "北京市",
+  "office_province": "北京市",
+  "office_address": "北京市西城区德胜门外大街3号1幢八层808室",
+  "register_date": 1432771200000,
+  "source": "amac_registry_active",
+  "detail_url": "https://gs.amac.org.cn/amac-infodisc/res/pof/manager/101000020785.html",
+  "alias_of": "米多",
+  "note": "核心字号「米多」命中，疑似更名（原登记名 米多资产）"
  },
  "米多（北京）资产管理有限公司": {
   "matched_name": "米多（北京）资产管理有限公司",
@@ -6432,12 +6641,22 @@
   "register_province": "重庆市重庆市江北区复盛镇正街(政府大楼)2层5间"
  },
  "金时（厦门）资产管理有限公司": {
-  "matched_name": "",
-  "manager_type": "",
-  "match_score": 0,
-  "status": "未查到",
-  "source": "not_found",
-  "note": "协会公示无「金时（厦门）」；有「金时（珠海横琴）私募股权基金管理有限公司」，是否同一主体待人工确认"
+  "matched_name": "金时(厦门)资产管理有限公司",
+  "manager_type": "私募证券投资基金管理人",
+  "match_score": 1.0,
+  "status": "在册",
+  "register_no": "P1065492",
+  "legal_rep": "彭德才",
+  "member_type": "非会员机构",
+  "fund_count": 20,
+  "register_province": "福建省",
+  "office_province": "福建省",
+  "office_address": "福建省厦门市思明区民族路50号世纪中心2204",
+  "register_date": 1508889600000,
+  "source": "amac_registry_active",
+  "detail_url": "https://gs.amac.org.cn/amac-infodisc/res/pof/manager/1706202203103647.html",
+  "alias_of": "金时(厦门)资产管理有限公司",
+  "note": "经变体「金时(厦门)资产管理有限公司」命中"
  },
  "铭睿博通（北京）投资管理股份有限公司": {
   "matched_name": "铭睿博通（北京）投资管理股份有限公司",
@@ -6478,9 +6697,22 @@
   "detail_url": "https://gs.amac.org.cn/amac-infodisc/res/pof/manager/1711301350101040.html"
  },
  "长瑞（武汉）私募股权基金管理有限公司": {
-  "manager_type": "",
-  "status": "未查到",
-  "source": "not_found"
+  "matched_name": "武汉东湖长瑞投资管理有限公司",
+  "manager_type": "私募股权、创业投资基金管理人",
+  "match_score": 0.9,
+  "status": "在册",
+  "register_no": "P1009922",
+  "legal_rep": "罗国新",
+  "member_type": "非会员机构",
+  "fund_count": 1,
+  "register_province": "湖北省",
+  "office_province": "湖北省",
+  "office_address": "湖北省武汉市洪山区欢乐大道9号正堂时代41层09室",
+  "register_date": 1427932800000,
+  "source": "amac_registry_active",
+  "detail_url": "https://gs.amac.org.cn/amac-infodisc/res/pof/manager/101000015322.html",
+  "alias_of": "长瑞",
+  "note": "核心字号「长瑞」命中，疑似更名（原登记名 长瑞（武汉）私募股权基金管理有限公司）"
  },
  "阿比垂直（武汉）私募基金管理有限公司": {
   "matched_name": "阿比垂直（武汉）私募基金管理有限公司",
@@ -6575,9 +6807,22 @@
   "detail_url": "https://gs.amac.org.cn/amac-infodisc/res/pof/manager/101000000924.html"
  },
  "青岛祺顺投资管理有限公司": {
-  "manager_type": "",
-  "status": "未查到",
-  "source": "not_found"
+  "matched_name": "青岛祺顺私募基金管理有限公司",
+  "manager_type": "私募证券投资基金管理人",
+  "match_score": 0.9,
+  "status": "在册",
+  "register_no": "P1070854",
+  "legal_rep": "宋耀",
+  "member_type": "非会员机构",
+  "fund_count": 29,
+  "register_province": "山东省",
+  "office_province": "安徽省",
+  "office_address": "安徽省合肥市包河区徽州大道4872号合肥金融港B5栋1006室",
+  "register_date": 1587945600000,
+  "source": "amac_registry_active",
+  "detail_url": "https://gs.amac.org.cn/amac-infodisc/res/pof/manager/1911221119103629.html",
+  "alias_of": "祺顺",
+  "note": "核心字号「祺顺」命中，疑似更名（原登记名 青岛祺顺投资管理有限公司）"
  },
  "青岛裕瑞资产管理有限公司": {
   "matched_name": "青岛裕瑞资产管理有限公司",
