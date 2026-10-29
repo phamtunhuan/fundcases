@@ -22,12 +22,50 @@
     el.value = cur && values.includes(cur) ? cur : "";
   }
 
+  /* 证监局设立地：4 直辖市 + 22 省 + 5 自治区 + 5 计划单列市 */
+  const BUREAU_GROUPS = [
+    ["直辖市", ["北京", "天津", "上海", "重庆"]],
+    ["省", ["河北", "山西", "辽宁", "吉林", "黑龙江", "江苏", "浙江", "安徽",
+            "福建", "江西", "山东", "河南", "湖北", "湖南", "广东", "海南",
+            "四川", "贵州", "云南", "陕西", "甘肃", "青海"]],
+    ["自治区", ["内蒙古", "广西", "西藏", "宁夏", "新疆"]],
+    ["计划单列市", ["大连", "宁波", "厦门", "青岛", "深圳"]]
+  ];
+
+  function fillRegionSelect() {
+    const el = $("#f-region");
+    const cur = el.value;
+    const present = new Set(CASES.map((c) => c.region).filter(Boolean));
+    const html = [`<option value="">全部地区</option>`];
+    BUREAU_GROUPS.forEach(([gname, list]) => {
+      const items = list.filter((r) => present.has(r));
+      if (!items.length) return;
+      html.push(`<optgroup label="${gname}">`);
+      items.forEach((r) => {
+        const n = CASES.filter((c) => c.region === r).length;
+        html.push(`<option value="${esc(r)}">${esc(r)}（${n}）</option>`);
+      });
+      html.push(`</optgroup>`);
+    });
+    // 兜底：若出现未归类的值也一并列出，避免数据遗漏被隐藏
+    const rest = [...present].filter((r) => !BUREAU_GROUPS.some(([, l]) => l.includes(r)));
+    if (rest.length) {
+      html.push(`<optgroup label="未归类">`);
+      rest.sort().forEach((r) => {
+        const n = CASES.filter((c) => c.region === r).length;
+        html.push(`<option value="${esc(r)}">${esc(r)}（${n}）</option>`);
+      });
+      html.push(`</optgroup>`);
+    }
+    el.innerHTML = html.join("");
+    el.value = cur && present.has(cur) ? cur : "";
+  }
+
   function initFilters() {
     const years = uniq(CASES.map((c) => c.year)).sort((a, b) => b - a);
     fillSelect($("#f-year"), years.map(String), "全部年份");
     fillSelect($("#f-type"), uniq(CASES.map((c) => c.manager_type)), "全部类型");
-    fillSelect($("#f-region"), uniq(CASES.map((c) => c.region)).sort(
-      (a, b) => count(b, "region") - count(a, "region")), "全部地区");
+    fillRegionSelect();
     fillSelect($("#f-doc"), uniq(CASES.map((c) => c.doc_type)), "全部文书");
     fillSelect($("#f-penalty"), uniq(CASES.flatMap((c) => c.penalties)).sort(
       (a, b) => count(b, "penalties") - count(a, "penalties")), "全部措施");
