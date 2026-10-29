@@ -38,9 +38,10 @@ docs/
 | `doc_format` | `pdf`（扫描件）或 `html`（网页版） |
 | `parties` / `organizations` / `individuals` | 当事人、机构、自然人 |
 | `org_primary` | 主责机构名称 |
-| `manager_type` | 管理人类型：以协会公示系统登记为准（私募证券类 / 私募股权创业类 / 其他 / 非私募管理人） |
+| `manager_type` | 管理人类型（固定五类）：私募证券投资基金管理人 / 私募股权、创业投资基金管理人 / 其他私募投资基金管理人 / 私募资产配置类管理人 / 未填报管理人类型 |
 | `manager_type_source` | 类型来源：协会公示（在册/已注销）/ 正文推断 |
-| `registry_status` | 协会公示登记状态：在册 / 已注销 / 未查到 |
+| `registry_status` | 协会公示登记状态，仅两类：**在册 / 已注销** |
+| `name_changed` | 协会在册、注销两处公示均查不到该名称时为 `true`，推定管理人已变更名称（此时 `registry_status` 记为「已注销」） |
 | `register_no` | 协会登记编号（P******） |
 | `legal_rep` | 法定代表人 |
 | `member_type` | 协会会员类型 |

@@ -688,14 +688,18 @@ def normalize_manager_type(raw: str) -> str:
 
 
 def classify_with_registry(text: str, org_name: str):
-    """优先采用协会公示的登记类型，未命中再回退到正文启发式。"""
+    """优先采用协会公示的登记类型，未命中再回退到正文启发式。
+
+    返回 (manager_type, source, reg, reg_status_raw)。
+    reg_status_raw 保留协会原始状态（在册/已注销/未查到/不适用/空）。
+    """
     r = registry_lookup(org_name)
+    raw_status = (r or {}).get("status", "") if r else ""
     if r and r.get("manager_type"):
-        status = r.get("status", "")
-        src = f"协会公示（{status}）" if status else "协会公示"
-        return normalize_manager_type(r["manager_type"]), src, r
+        src = f"协会公示（{raw_status}）" if raw_status else "协会公示"
+        return normalize_manager_type(r["manager_type"]), src, r, raw_status
     label, src = classify_manager_type(text, org_name)
-    return normalize_manager_type(label), src, r
+    return normalize_manager_type(label), src, r, raw_status
 
 
 def local_path(url: str, idx: int):
@@ -759,7 +763,12 @@ def main():
         org = orgs[0] if orgs else (
             max(parties, key=len) if parties else "")
 
-        manager_type, type_source, reg = classify_with_registry(norm, org)
+        manager_type, type_source, reg, reg_status_raw = classify_with_registry(norm, org)
+        # 登记状态只保留两类：在册 / 已注销
+        #   在册   ← 协会在册名录命中，或实体存在但非私募（不适用）
+        #   已注销 ← 已注销名录命中；协会两处均查不到，说明管理人已变更名称
+        name_changed = reg_status_raw == "未查到"
+        registry_status = "在册" if reg_status_raw in ("在册", "不适用") else "已注销"
         penalties = detect_penalties(norm)
         scope = norm + "\n" + re.sub(r'违規|违現', '违规', norm)
         scope_flat = re.sub(r'\s+', '', scope)   # 去掉换行，让跨段表述可匹配
@@ -794,7 +803,8 @@ def main():
             "org_primary": org,
             "manager_type": manager_type,
             "manager_type_source": type_source,
-            "registry_status": (reg or {}).get("status", ""),
+            "registry_status": registry_status,
+            "name_changed": name_changed,
             "registry_match_score": (reg or {}).get("match_score"),
             "register_no": (reg or {}).get("register_no", ""),
             "legal_rep": (reg or {}).get("legal_rep", ""),

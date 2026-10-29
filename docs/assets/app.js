@@ -91,8 +91,9 @@
       if (state.year && String(c.year) !== state.year) return false;
       if (state.type && c.manager_type !== state.type) return false;
       if (state.reg) {
-        const rs = c.registry_status || "未查到";
-        if (rs !== state.reg) return false;
+        if (state.reg === "__renamed") {
+          if (!c.name_changed) return false;
+        } else if (c.registry_status !== state.reg) return false;
       }
       if (state.region && c.region !== state.region) return false;
       if (state.doc && c.doc_type !== state.doc) return false;
@@ -124,6 +125,8 @@
       return `<tr>
         <td>${esc(c.date)}</td>
         <td><span class="org" data-id="${c.id}">${esc(name)}</span>
+          <span class="reg-badge ${c.registry_status === "已注销" ? "reg-off" : "reg-on"}">${esc(c.registry_status)}</span>
+          ${c.name_changed ? '<span class="reg-badge reg-off" title="协会在册/注销两处均无该名称，推定已更名">已更名</span>' : ""}
           ${sub ? `<div class="sub2">其他当事人：${esc(sub)}</div>` : ""}
           <div class="sub2">${esc(c.doc_type)}</div></td>
         <td class="${tcls}">${esc(c.manager_type)}</td>
@@ -260,6 +263,9 @@
     const reg = c.registry_status
       ? `<span class="reg-badge ${c.registry_status === "已注销" ? "reg-off" : "reg-on"}">协会公示·${esc(c.registry_status)}</span>`
       : "";
+    const renamed = c.name_changed
+      ? `<span class="reg-badge reg-off" title="协会在册/注销两处均无该名称记录，推定管理人已变更名称">原名查无·已变更名称</span>`
+      : "";
     $("#m-meta").innerHTML = [
       `发布日期：${esc(c.date)}`, `文书类型：${esc(c.doc_type)}`,
       `管理人类型：${esc(c.manager_type)}（${esc(c.manager_type_source)}）`,
@@ -270,7 +276,7 @@
       c.penalties.length ? `处分：${esc(c.penalties.join("、"))}` : "",
       c.violation_tags.length ? `事由：${esc(c.violation_tags.join("、"))}` : "",
       `当事人：${esc(c.parties.join("、") || "—")}`
-    ].filter(Boolean).map((t) => `<span>${t}</span>`).join("") + reg;
+    ].filter(Boolean).map((t) => `<span>${t}</span>`).join("") + reg + renamed;
     $("#m-link").href = c.source_url;
     const regLink = $("#m-reg");
     if (c.registry_url) { regLink.hidden = false; regLink.href = c.registry_url; }
