@@ -37,7 +37,8 @@
 
 ```
 scripts/
-  crawl_list.py        抓取 35 个列表页，产出 data/cases_raw_list.json
+  crawl_list.py        抓取全部列表页（页数取自 createPageHTML），产出 data/cases_raw_list.json
+  audit_list.py        对账脚本：重抓列表与库里逐条比对，输出增删差异
   download_docs.py     并发下载 597 份原文（480 PDF + 117 网页）
   ocr_vision.py        扫描版 PDF 的 macOS Vision 中文 OCR
   parse_html.py        抽取网页版决定书正文
@@ -57,6 +58,16 @@ docs/
   data/texts.json        决定书正文（2.9 MB，详情页/全文检索时懒加载）
 ```
 
+## 数据完整性核查
+
+核查报告见 [`AUDIT.md`](./AUDIT.md)，可用 `python3 scripts/audit_list.py` 随时复核。要点：
+
+- 协会「受处分机构」栏目当前 597 条，本地 597 条，按 URL 逐条比对：**新增 0、消失 0**
+- 597 份原文全部落地，缺失 0、空文件 0、正文为空 0
+- 站点分页计数（`createPageHTML`）比实际内容页多 1，第 35 页返回 404；抓取脚本已按计数动态取页并对 404 容错
+- 12 条记录此前机构名为空，已通过标题/正文兜底补全 10 条（并重新核验协会登记信息），剩余 2 条为批量注销公告，标记 `batch_notice`
+- 范围边界：协会「自律措施」栏目（`/zlgl/zlcs/`，18 条，主体为基金销售机构）不在本库范围内
+
 ## 数据字段
 
 | 字段 | 说明 |
@@ -65,7 +76,8 @@ docs/
 | `doc_type` | 纪律处分决定书 / 复核决定书 / 事先告知书送达公告 / 注销登记公告 等 |
 | `doc_format` | `pdf`（扫描件）或 `html`（网页版） |
 | `parties` / `organizations` / `individuals` | 当事人、机构、自然人 |
-| `org_primary` | 主责机构名称 |
+| `org_primary` | 主责机构名称（注销公告/复核决定书会从标题、正文「申请人」兜底提取） |
+| `batch_notice` | `true` 表示批量注销公告（一次覆盖多家机构，不归属单一管理人） |
 | `manager_type` | 管理人类型（固定五类）：私募证券投资基金管理人 / 私募股权、创业投资基金管理人 / 其他私募投资基金管理人 / 私募资产配置类管理人 / 未填报管理人类型 |
 | `manager_type_source` | 类型来源：协会公示（在册/已注销）/ 正文推断 |
 | `registry_status` | 协会公示登记状态，仅两类：**在册 / 已注销** |

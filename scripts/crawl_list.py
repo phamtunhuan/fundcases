@@ -4,6 +4,8 @@
 import json
 import re
 import time
+import urllib.error
+import urllib.parse
 import urllib.request
 from pathlib import Path
 
@@ -29,7 +31,13 @@ def fetch(url: str, retries=3) -> str:
             req = urllib.request.Request(url, headers={"User-Agent": UA})
             with urllib.request.urlopen(req, timeout=40) as r:
                 return r.read().decode("utf-8", "ignore")
-        except Exception as e:
+        except urllib.error.HTTPError as e:
+            if e.code == 404:      # 分页计数常比实际页数多 1，末页 404 属正常
+                return ""
+            if n == retries - 1:
+                raise
+            time.sleep(2 * (n + 1))
+        except Exception:
             if n == retries - 1:
                 raise
             time.sleep(2 * (n + 1))
@@ -38,16 +46,25 @@ def fetch(url: str, retries=3) -> str:
 
 def main():
     items = []
-    total_pages = None
-    for i in range(1, 35):  # 1..34
-        html = fetch(page_url(i))
+    first = fetch(page_url(1))
+    m = re.search(r'createPageHTML\((\d+),\s*(\d+)', first)
+    total_pages = int(m.group(1)) if m else 1
+    print(f"分页计数 createPageHTML -> {total_pages}")
+
+    empty_streak = 0
+    for i in range(1, total_pages + 1):
+        html = first if i == 1 else fetch(page_url(i))
+        if i > 1 and not html:
+            print(f"page {i}: 空（可能超出实际页数）")
+            empty_streak += 1
+            if empty_streak >= 2:
+                break
+            continue
+        empty_streak = 0
         (RAW / (f"index_{i}.html" if i > 1 else "index.html")).write_text(
             html, encoding="utf-8")
-        m = re.search(r'createPageHTML\((\d+),\s*(\d+)', html)
-        if m:
-            total_pages = int(m.group(1))
         found = ITEM_RE.findall(html)
-        print(f"page {i}: {len(found)} items (total_pages={total_pages})")
+        print(f"page {i}: {len(found)} items")
         for href, title, date in found:
             title = title.strip()
             href = href.strip()
@@ -80,5 +97,4 @@ def main():
 
 
 if __name__ == "__main__":
-    import urllib.parse
     main()

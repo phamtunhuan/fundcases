@@ -736,6 +736,46 @@ def load_text(idx: int, url: str) -> str:
     return ""
 
 
+TITLE_ORG_RE = re.compile(r"关于注销(.+?)私募基金管理人登记的公告")
+TITLE_ORG_RE2 = re.compile(r"关于注销(.+?)基金管理人登记的公告")
+TITLE_REVIEW_RE = re.compile(r"复核决定书[-—－_\s]*(.+)$")
+TEXT_APPLICANT_RE = re.compile(
+    r"申请人[：:]\s*([\u4e00-\u9fa5A-Za-z（）()·]{4,40}?"
+    r"(?:股份有限公司|有限责任公司|有限公司|合伙企业（有限合伙）|合伙企业\(有限合伙\)|中心))")
+BATCH_WORDS = re.compile(r"期间届满|未提交|专项法律意见书|失联|异常经营|第[一二三四五六七八九十]+批")
+
+
+def _fix_org_ocr(name: str) -> str:
+    """机构名常见 OCR 混淆修正。"""
+    for bad, good in (("投咨管理", "投资管理"), ("咨格", "资格"),
+                      ("管埋", "管理"), ("资产菅理", "资产管理")):
+        name = name.replace(bad, good)
+    return name
+
+
+def org_from_title(title: str) -> str:
+    """从「关于注销X私募基金管理人登记的公告」等标题中取机构名。"""
+    t = (title or "").strip()
+    for pat in (TITLE_ORG_RE, TITLE_ORG_RE2):
+        m = pat.search(t)
+        if m:
+            name = m.group(1).strip()
+            if len(name) >= 6 and not BATCH_WORDS.search(name):
+                return _fix_org_ocr(name)
+    m = TITLE_REVIEW_RE.search(t)
+    if m:
+        name = m.group(1).strip()
+        if 4 <= len(name) <= 30 and not BATCH_WORDS.search(name):
+            return _fix_org_ocr(name)
+    return ""
+
+
+def org_from_text(text: str) -> str:
+    """从正文首段「申请人：XXX」取机构全称。"""
+    m = TEXT_APPLICANT_RE.search(text or "")
+    return _fix_org_ocr(m.group(1)) if m else ""
+
+
 def main():
     items = json.loads(LIST.read_text(encoding="utf-8"))
     cases = []
@@ -762,8 +802,23 @@ def main():
                     parties = tp
         org = orgs[0] if orgs else (
             max(parties, key=len) if parties else "")
+        # 兜底：注销登记公告 / 复核决定书的机构名常只出现在标题或首句
+        batch_notice = False
+        if not org:
+            if "复核" in doc_type:
+                org = org_from_text(norm) or org_from_title(it["title"])
+            else:
+                org = org_from_title(it["title"])
+            if not org and doc_type == "注销登记公告":
+                batch_notice = True           # 批量注销公告，无单一机构
+            if org:
+                orgs = [org]
+                parties = [org] + [p for p in parties if p != org]
 
         manager_type, type_source, reg, reg_status_raw = classify_with_registry(norm, org)
+        if batch_notice:                     # 批量公告：多家机构合并，不归属单一管理人
+            manager_type, type_source, reg, reg_status_raw = (
+                "未填报管理人类型", "批量公告（无单一机构）", None, "已注销")
         # 登记状态只保留两类：在册 / 已注销
         #   在册   ← 协会在册名录命中，或实体存在但非私募（不适用）
         #   已注销 ← 已注销名录命中；协会两处均查不到，说明管理人已变更名称
@@ -801,6 +856,7 @@ def main():
             "organizations": orgs,
             "individuals": persons,
             "org_primary": org,
+            "batch_notice": batch_notice,
             "manager_type": manager_type,
             "manager_type_source": type_source,
             "registry_status": registry_status,

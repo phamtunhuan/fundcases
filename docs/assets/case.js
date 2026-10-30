@@ -53,6 +53,7 @@
       out.push(`<span class="reg-badge reg-off" title="协会在册、注销两处公示均无该名称，推定管理人已变更名称">原名查无·已更名</span>`);
     }
     if (c.doc_format) out.push(`<span class="reg-badge doc-badge">${c.doc_format === "pdf" ? "扫描件" : "网页原文"}</span>`);
+    if (c.batch_notice) out.push(`<span class="reg-badge doc-badge" title="该公告一次性注销多家机构，不归属单一管理人">批量公告</span>`);
     if (c.title_truncated) out.push(`<span class="reg-badge doc-badge">标题截断</span>`);
     return out.join("");
   }

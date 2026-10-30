@@ -24,29 +24,45 @@ CITY = ["上海", "北京", "深圳", "珠海", "厦门", "济南", "青岛", "�
 
 
 def variants(name: str):
-    """生成候选查询串：去括号、去城市前缀、去公司后缀的核心字号等。"""
-    out = [name]
+    """候选查询串：原名 / 去括号 / 去「市」/ 股权基金全称化 / 核心字号 / 去城市前缀。"""
+    out = []
+
+    def add(x):
+        x = (x or "").strip()
+        if x and len(x) >= 2 and x not in out:
+            out.append(x)
+
+    add(name)
     base = re.sub(r"[（(].*?[)）]", "", name).strip()
-    if base and base not in out:
-        out.append(base)
-    # 去后缀
-    core = base
-    for suf in SUFFIX:
-        if core.endswith(suf):
-            core = core[: -len(suf)]
-            break
-    core = core.rstrip("管理")
-    if core and core not in out:
-        out.append(core)
-    # 去城市前缀
-    cityless = core
-    for c in CITY:
-        if cityless.startswith(c):
-            cityless = cityless[len(c):]
-            break
-    if cityless and cityless != core and cityless not in out:
-        out.append(cityless)
-    return [x for x in out if len(x) >= 2]
+    add(base)
+
+    cands = [base]
+    m = re.match(r"^(\S{2,4}?)市(.+)$", base)   # 深圳市X → 深圳X
+    if m:
+        cands.append(m.group(1) + m.group(2))
+    for c in list(cands):                        # 股权基金 → 股权投资基金管理
+        if "股权基金管理" in c:
+            cands.append(c.replace("股权基金管理", "股权投资基金管理"))
+        elif "股权基金" in c:
+            cands.append(c.replace("股权基金", "股权投资基金管理"))
+    for c in cands:
+        add(c)
+
+    for c in list(cands):
+        core = c
+        for suf in SUFFIX:
+            if core.endswith(suf):
+                core = core[: -len(suf)]
+                break
+        core = core.rstrip("管理")
+        add(core)
+        cityless = core
+        for city in CITY:
+            if cityless.startswith(city):
+                cityless = cityless[len(city):]
+                break
+        add(cityless)
+    return out
 
 
 def main():

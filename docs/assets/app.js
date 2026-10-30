@@ -308,6 +308,7 @@
         <td><a class="org" href="${href}">${hl(name, curTokens)}</a>
           <span class="reg-badge ${c.registry_status === "已注销" ? "reg-off" : "reg-on"}">${esc(c.registry_status)}</span>
           ${c.name_changed ? '<span class="reg-badge reg-off" title="协会在册/注销两处均无该名称，推定已更名">已更名</span>' : ""}
+          ${c.batch_notice ? '<span class="reg-badge doc-badge" title="该公告一次性注销多家机构，不归属单一管理人">批量公告</span>' : ""}
           ${sub ? `<div class="sub2">其他当事人：${esc(sub)}</div>` : ""}
           <div class="sub2">${esc(c.doc_type)}</div>
           ${snip ? `<div class="snip">${hl(snip, curTokens)}</div>` : ""}</td>

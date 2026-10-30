@@ -6930,5 +6930,112 @@
   "detail_url": "https://gs.amac.org.cn/amac-infodisc/res/cancelled/manager/101000006172.html",
   "cancel_type": "协会注销",
   "register_province": "浙江省金华市义乌市商城大道L33号"
+ },
+ "上海国渭资产管理有限公司": {
+  "matched_name": "上海国渭资产管理有限公司",
+  "manager_type": "未填报管理人类型",
+  "match_score": 1.0,
+  "status": "已注销",
+  "cancel_date": 1524787200000,
+  "source": "amac_registry_cancelled",
+  "detail_url": "https://gs.amac.org.cn/amac-infodisc/res/cancelled/manager/101000038610.html",
+  "cancel_type": "协会注销",
+  "register_province": "上海市上海市浦东新区东方路3601号2号楼2546室"
+ },
+ "上海阜兴实业集团有限公司": {
+  "manager_type": "",
+  "status": "未查到",
+  "source": "not_found",
+  "note": "协会在册/注销两处均无记录，推定管理人已变更名称"
+ },
+ "北京炳隆资产管理有限公司": {
+  "matched_name": "北京炳隆资产管理有限公司",
+  "manager_type": "私募股权、创业投资基金管理人",
+  "match_score": 1.0,
+  "status": "已注销",
+  "cancel_date": 1516320000000,
+  "source": "amac_registry_cancelled",
+  "detail_url": "https://gs.amac.org.cn/amac-infodisc/res/cancelled/manager/101000007015.html",
+  "cancel_type": "协会注销",
+  "register_province": "北京市北京市东城区灯市口大街50号九层A2"
+ },
+ "广西世纪红榕创业投资管理有限公司": {
+  "matched_name": "广西世纪红榕创业投资有限公司",
+  "manager_type": "私募股权、创业投资基金管理人",
+  "match_score": 0.9,
+  "status": "已注销",
+  "cancel_date": 1516320000000,
+  "source": "amac_registry_cancelled",
+  "detail_url": "https://gs.amac.org.cn/amac-infodisc/res/cancelled/manager/101000005285.html",
+  "cancel_type": "协会注销",
+  "register_province": "广西壮族自治区nullnull民族大道111-1号广西发展大厦东楼13楼",
+  "note": "变体「广西世纪红榕创业」命中，原登记名可能已变更"
+ },
+ "深圳市同盈股权基金管理有限公司": {
+  "matched_name": "深圳同盈股权投资基金管理有限公司",
+  "manager_type": "私募股权、创业投资基金管理人",
+  "match_score": 1.0,
+  "status": "已注销",
+  "cancel_date": 1524787200000,
+  "source": "amac_registry_cancelled",
+  "detail_url": "https://gs.amac.org.cn/amac-infodisc/res/cancelled/manager/101000002326.html",
+  "cancel_type": "协会注销",
+  "register_province": "广东省深圳市null福田区",
+  "note": "变体「深圳同盈股权投资基金管理有限公司」命中，原登记名可能已变更"
+ },
+ "深圳市德赋资产管理有限公司": {
+  "matched_name": "深圳市德赋资产管理有限公司",
+  "manager_type": "私募股权、创业投资基金管理人",
+  "match_score": 1.0,
+  "status": "已注销",
+  "cancel_date": 1524787200000,
+  "source": "amac_registry_cancelled",
+  "detail_url": "https://gs.amac.org.cn/amac-infodisc/res/cancelled/manager/1612161353101855.html",
+  "cancel_type": "协会注销",
+  "register_province": "广东省深圳市南山区粤海街道科技园南区高新南七道风华科技大厦701"
+ },
+ "烟台中安祥茂资产管理有限公司": {
+  "matched_name": "烟台中安祥茂资产管理有限公司",
+  "manager_type": "其他私募投资基金管理人",
+  "match_score": 1.0,
+  "status": "已注销",
+  "cancel_date": 1538265600000,
+  "source": "amac_registry_cancelled",
+  "detail_url": "https://gs.amac.org.cn/amac-infodisc/res/cancelled/manager/101000006530.html",
+  "cancel_type": "协会注销",
+  "register_province": "山东省烟台市null开发区泰山路52号16楼13-5号"
+ },
+ "烟台市双兴创业投资有限公司": {
+  "matched_name": "烟台市双兴创业投资有限公司",
+  "manager_type": "私募股权、创业投资基金管理人",
+  "match_score": 1.0,
+  "status": "已注销",
+  "cancel_date": 1538265600000,
+  "source": "amac_registry_cancelled",
+  "detail_url": "https://gs.amac.org.cn/amac-infodisc/res/cancelled/manager/101000030604.html",
+  "cancel_type": "协会注销",
+  "register_province": "山东省烟台市null高新区创业路42号"
+ },
+ "福建东方银商投资管理有限公司": {
+  "matched_name": "福建东方银商投资管理有限公司",
+  "manager_type": "私募证券投资基金管理人",
+  "match_score": 1.0,
+  "status": "已注销",
+  "cancel_date": 1524787200000,
+  "source": "amac_registry_cancelled",
+  "detail_url": "https://gs.amac.org.cn/amac-infodisc/res/cancelled/manager/101000008973.html",
+  "cancel_type": "协会注销",
+  "register_province": "福建省泉州市丰泽区海景花园海逸园A3-202"
+ },
+ "郑州百盛投资管理有限公司": {
+  "matched_name": "郑州百盛投资管理有限公司",
+  "manager_type": "私募股权、创业投资基金管理人",
+  "match_score": 1.0,
+  "status": "已注销",
+  "cancel_date": 1524787200000,
+  "source": "amac_registry_cancelled",
+  "detail_url": "https://gs.amac.org.cn/amac-infodisc/res/cancelled/manager/101000007820.html",
+  "cancel_type": "协会注销",
+  "register_province": "河南省郑州市null外环路5号"
  }
 }
