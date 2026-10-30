@@ -146,6 +146,121 @@ def normalize(text: str) -> str:
 
 
 # ============================================================
+# 二·五、展示正文的 OCR 修复（仅 PDF 扫描件；HTML 版为原文，不处理）
+#   规则均以「真实上下文」验证过，只收敛高频同形误识，不做猜测性改写
+# ============================================================
+TXT_FIX_PRE = [   # 繁简转换之前，针对繁体形近误识
+    (re.compile(r"申[辦辨]"), "申辩"),
+    (re.compile(r"净値"), "净值"),
+    (re.compile(r"份額"), "份额"),
+]
+
+TXT_FIX = [
+    # —— 标题与正文粘连：一、基本事实经查… ——
+    (re.compile(r"^([一二三四五六七八九十]{1,3}、[^\n。，：]{2,10}?)"
+                r"(?=(?:当事人|经查|根据|协会|上述|申请人|现将|按照|经审理|本会))", re.M),
+     r"\1\n"),
+    # —— 机构/产品名称类 ——
+    (re.compile(r"私[菜慕蒙蒜芽苏菉基]"), "私募"),
+    (re.compile(r"[蒸蛬苤垫燕热苏共蒜恭芯期式]金"), "基金"),
+    (re.compile(r"证[养苏]"), "证券"),
+    (re.compile(r"证券券"), "证券"),
+    (re.compile(r"投咨者"), "投资者"),
+    (re.compile(r"投咨(?=基金|管理|决策|运作|标的)"), "投资"),
+    (re.compile(r"(私募|公募|证券|基金)[投股]?资?[菅管]理(?=[人公])"), r"\1管理"),
+    # —— 法规与文书 ——
+    (re.compile(r"智行办法"), "暂行办法"),
+    (re.compile(r"办洪(?=》|）|\))"), "办法"),
+    (re.compile(r"决定鉴"), "决定书"),
+    (re.compile(r"洪定"), "决定"),
+    (re.compile(r"基金管理无"), "基金管理人"),
+    (re.compile(r"车实清楚"), "事实清楚"),
+    (re.compile(r"投资决第"), "投资决策"),
+    (re.compile(r"勤勉尽费"), "勤勉尽责"),
+    (re.compile(r"道责(?=。|，|）|\s|$)"), "谴责"),
+    (re.compile(r"投盗(?=基金|管理|者)"), "投资"),
+    (re.compile(r"[撇撖撒橄]销|撤消"), "撤销"),
+    (re.compile(r"[谴遣][责贵]"), "谴责"),
+    (re.compile(r"[皙哲斩香]停"), "暂停"),
+    (re.compile(r"备[紫秦桉察]|(?<=基金|登记|产品)各案"), "备案"),
+    # —— 认定与表述 ——
+    (re.compile(r"子以"), "予以"),
+    (re.compile(r"箏证据"), "等证据"),
+    (re.compile(r"技露"), "披露"),
+    (re.compile(r"[道蓮莲]慎"), "谨慎"),
+    (re.compile(r"[勒勃]勉"), "勤勉"),
+    (re.compile(r"义冬"), "义务"),
+    (re.compile(r"[些临]管(?=办法|规定|要求|措施|部门)"), "监管"),
+    (re.compile(r"商级管理"), "高级管理"),
+    (re.compile(r"道反(?=了|《)"), "违反"),
+    (re.compile(r"费任"), "责任"),
+    (re.compile(r"职贵|管理职费"), "职责"),
+    (re.compile(r"投咨者"), "投资者"),
+    (re.compile(r"[揩描]施|措拖"), "措施"),
+    (re.compile(r"[厦覆]行(?=谨慎|勤勉|职责|义务|合同|约定|程序)"), "履行"),
+    (re.compile(r"[進进]成(?=恶劣|重大|损失|影响|严重后果)"), "造成"),
+    (re.compile(r"[菜慕蒙]集|募[菜慕蒙]"), "募集"),
+    (re.compile(r"平[合冶](?=信息|报送)"), "平台"),
+    (re.compile(r"误导(?=性|投资者|宣传|陈述|销售|客户)"), "误导"),
+    (re.compile(r"侵古"), "侵占"),
+    (re.compile(r"[娜那]用(?=基金|财产)"), "挪用"),
+    (re.compile(r"欺[許许](?=客户|投资者|手段|行为)"), "欺诈"),
+    (re.compile(r"报[达遂](?=情况|信息|材料|义务|期限)"), "报送"),
+    (re.compile(r"菅理|管埋"), "管理"),
+    (re.compile(r"期恨"), "期限"),
+    (re.compile(r"交曷"), "交易"),
+    (re.compile(r"关朕"), "关联"),
+    (re.compile(r"收[盖盆](?=率|分配|权)"), "收益"),
+    (re.compile(r"承[诸諾]"), "承诺"),
+    (re.compile(r"违[現观](?=行为|事实|问题|情形)"), "违规"),
+    # —— 生僻误识与标点归一 ——
+    (re.compile(r"私[𦸀]"), "私募"),
+    (re.compile(r"𦸀金"), "基金"),
+    (re.compile(r"𦸀"), "基"),
+    (re.compile(r"𥴠"), "募"),
+    (re.compile(r"私藄"), "私募"),
+    (re.compile(r"登迉"), "登记"),
+    (re.compile(r"清箄"), "清算"),
+    (re.compile(r"末清算"), "未清算"),
+    (re.compile(r"纪律广决定"), "纪律处分决定"),
+    (re.compile(r"[筝箏]证据"), "等证据"),
+    (re.compile(r"〞"), "”"),
+    (re.compile(r"»"), "》"),
+    (re.compile(r"＜"), "（"),
+    (re.compile(r"＋"), "+"),
+    (re.compile(r"，，+"), "，"),
+    (re.compile(r"，）"), "）"),
+    (re.compile(r"中基协宇"), "中基协字"),
+    (re.compile(r"措旅"), "措施"),
+    (re.compile(r"实旅办法"), "实施办法"),
+    (re.compile(r"事安"), "事实"),
+    (re.compile(r"纪街"), "纪律"),
+    (re.compile(r"分别千"), "分别于"),
+    (re.compile(r"考感"), "考虑"),
+    (re.compile(r"借货"), "借贷"),
+    (re.compile(r"负费人"), "负责人"),
+    (re.compile(r"事牛告知"), "事先告知"),
+    (re.compile(r"中热协"), "中基协"),
+    (re.compile(r"驶回"), "赎回"),
+    (re.compile(r"赋子"), "赋予"),
+    (re.compile(r"服芬"), "服务"),
+    (re.compile(r"主观恐意"), "主观恶意"),
+    (re.compile(r"瑚间"), "期间"),
+]
+
+
+def polish_ocr(text: str) -> str:
+    """修正扫描件正文中的高频同形误识与标题粘连（不改语义、不做推测）。"""
+    for pat, rep in TXT_FIX_PRE:
+        text = pat.sub(rep, text)
+    if _CC:
+        text = _CC.convert(text)          # 繁体 -> 简体
+    for pat, rep in TXT_FIX:
+        text = pat.sub(rep, text)
+    return text
+
+
+# ============================================================
 # 三、当事人 / 机构
 # ============================================================
 OPEN_BR = "（(〔［【["
@@ -785,6 +900,8 @@ def main():
         if not raw:
             no_text += 1
         text = reflow(raw)
+        if it["doc_type"] == "pdf":       # 扫描件：修正 OCR 误识，网页版保持原样
+            text = polish_ocr(text)
         norm = normalize(text)
 
         doc_type, parties, truncated = parse_title(it["title"])

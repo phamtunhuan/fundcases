@@ -39,6 +39,7 @@
 scripts/
   crawl_list.py        抓取全部列表页（页数取自 createPageHTML），产出 data/cases_raw_list.json
   audit_list.py        对账脚本：重抓列表与库里逐条比对，输出增删差异
+  qa_ocr.py            OCR 体检：以领域词表为锚，输出可疑误写与排版异常
   download_docs.py     并发下载 597 份原文（480 PDF + 117 网页）
   ocr_vision.py        扫描版 PDF 的 macOS Vision 中文 OCR
   parse_html.py        抽取网页版决定书正文
