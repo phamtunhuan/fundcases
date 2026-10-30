@@ -157,8 +157,8 @@ TXT_FIX_PRE = [   # 繁简转换之前，针对繁体形近误识
 
 TXT_FIX = [
     # —— 标题与正文粘连：一、基本事实经查… ——
-    (re.compile(r"^([一二三四五六七八九十]{1,3}、[^\n。，：]{2,10}?)"
-                r"(?=(?:当事人|经查|根据|协会|上述|申请人|现将|按照|经审理|本会))", re.M),
+    (re.compile(r"^([一二三四五六七八九十]{1,3}、[^\n。，：]{2,16}?)"
+                r"(?=(?:当事人|经查|经审理|根据|协会|申请人|前期|现将|按照|本会|我会|该机构|上述))", re.M),
      r"\1\n"),
     # —— 机构/产品名称类 ——
     (re.compile(r"私[菜慕蒙蒜芽苏菉基]"), "私募"),
@@ -194,7 +194,7 @@ TXT_FIX = [
     (re.compile(r"商级管理"), "高级管理"),
     (re.compile(r"道反(?=了|《)"), "违反"),
     (re.compile(r"费任"), "责任"),
-    (re.compile(r"职贵|管理职费"), "职责"),
+    (re.compile(r"职贵|管理职费|职费"), "职责"),
     (re.compile(r"投咨者"), "投资者"),
     (re.compile(r"[揩描]施|措拖"), "措施"),
     (re.compile(r"[厦覆]行(?=谨慎|勤勉|职责|义务|合同|约定|程序)"), "履行"),
@@ -246,6 +246,18 @@ TXT_FIX = [
     (re.compile(r"服芬"), "服务"),
     (re.compile(r"主观恐意"), "主观恶意"),
     (re.compile(r"瑚间"), "期间"),
+    (re.compile(r"道[费责]|遗责"), "谴责"),
+    (re.compile(r"闸述"), "阐述"),
+    (re.compile(r"根抿"), "根据"),
+    (re.compile(r"挖制"), "控制"),
+    (re.compile(r"私茅"), "私募"),
+    (re.compile(r"清笪"), "清算"),
+    (re.compile(r"基佥"), "基金"),
+    (re.compile(r"侬法"), "依法"),
+    (re.compile(r"釆取"), "采取"),
+    (re.compile(r"区城"), "区域"),
+    (re.compile(r"族下"), "旗下"),
+    (re.compile(r"投资歉项"), "投资款项"),
 ]
 
 
@@ -258,6 +270,47 @@ def polish_ocr(text: str) -> str:
     for pat, rep in TXT_FIX:
         text = pat.sub(rep, text)
     return text
+
+
+# 段落断行修复：OCR 常在句中插入空行，把「资产证 明文件」「交 易操作」
+# 之类拆成两段；依据「前段无句末标点」或「后段以连词/标点开头」合并。
+BREAK_HEAD = re.compile(
+    r"^(当事人[：:]|申请人[：:]|被申请人[：:]|抄送)")
+BREAK_HEAD2 = re.compile(
+    r"^([一二三四五六七八九十]{1,3}[、.．]|（[一二三四五六七八九十]{1,3}）|[0-9]{1,2}[、.．]|此致)")
+BREAK_TAIL = re.compile(r"(决定书|复核决定书|告知书|公告|意见|说明|答复|通知|函)$")
+BREAK_END = re.compile(r"[。！？；：”’」』】）)\]\d]$")
+BREAK_CONT = re.compile(r"^(的|了|和|与|及|或|并|等|方面|以及|且|同时|此外|另外|其后|随后|"
+                        r"被|所|为|自|由|，|。|；|、|）|】|」|”|’)")
+
+
+def _is_heading(p: str) -> bool:
+    # 只有「短小标题样式」才算标题；「根据/经查/综上」等正文起始不视为标题
+    return bool(BREAK_HEAD.match(p)) \
+        or (len(p) <= 30 and bool(BREAK_HEAD2.match(p))) \
+        or (len(p) <= 24 and bool(BREAK_TAIL.search(p)))
+
+
+def fix_breaks(text: str) -> str:
+    """合并 OCR 在句中产生的错误分段。"""
+    out = []
+    for p in text.split("\n\n"):
+        p = p.strip()
+        if not p:
+            continue
+        if not out:
+            out.append(p)
+            continue
+        prev = out[-1]
+        if _is_heading(p):                  # 小标题保留独立成段
+            out.append(p)
+            continue
+        if (not BREAK_END.search(prev) and not _is_heading(prev)) \
+                or (BREAK_CONT.match(p) and not _is_heading(prev)):
+            out[-1] = prev + p
+        else:
+            out.append(p)
+    return "\n\n".join(out)
 
 
 # ============================================================
@@ -900,8 +953,8 @@ def main():
         if not raw:
             no_text += 1
         text = reflow(raw)
-        if it["doc_type"] == "pdf":       # 扫描件：修正 OCR 误识，网页版保持原样
-            text = polish_ocr(text)
+        if it["doc_type"] == "pdf":       # 扫描件：修正 OCR 误识与错误断行，网页版保持原样
+            text = polish_ocr(fix_breaks(text))
         norm = normalize(text)
 
         doc_type, parties, truncated = parse_title(it["title"])
