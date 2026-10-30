@@ -2,7 +2,7 @@
 (function () {
   const $ = (s) => document.querySelector(s);
   const PAGE_SIZE = 25;
-  let CASES = [], TEXTS = null, view = [], page = 1;
+  let CASES = [], view = [], page = 1;
 
   const esc = (s) => String(s == null ? "" : s).replace(/[&<>"]/g,
     (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
@@ -294,6 +294,7 @@
     $("#result-count").textContent =
       `命中 ${view.length} 例 · 第 ${page}/${pages} 页${mode}`;
 
+    const qs = state.q.trim() ? `&q=${encodeURIComponent(state.q.trim())}` : "";
     const rows = view.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE).map((c) => {
       const tcls = c.manager_type.startsWith("私募证券") ? "type-sec"
         : c.manager_type.startsWith("私募股权") ? "type-eq" : "type-na";
@@ -301,9 +302,10 @@
       const sub = c.parties.length > 1 ? c.parties.slice(1).join("、") : "";
       const ix = IDXOf(c);
       const snip = curTokens.length && ix ? snippet(ix, curTokens) : "";
-      return `<tr>
+      const href = `case.html?id=${c.id}${qs}`;
+      return `<tr class="row" data-href="${href}">
         <td>${esc(c.date)}</td>
-        <td><span class="org" data-id="${c.id}">${hl(name, curTokens)}</span>
+        <td><a class="org" href="${href}">${hl(name, curTokens)}</a>
           <span class="reg-badge ${c.registry_status === "已注销" ? "reg-off" : "reg-on"}">${esc(c.registry_status)}</span>
           ${c.name_changed ? '<span class="reg-badge reg-off" title="协会在册/注销两处均无该名称，推定已更名">已更名</span>' : ""}
           ${sub ? `<div class="sub2">其他当事人：${esc(sub)}</div>` : ""}
@@ -313,7 +315,8 @@
         <td>${esc(c.region || "—")}</td>
         <td>${c.penalties.length ? c.penalties.map((p) => `<span class="tag red">${esc(p)}</span>`).join("") : '<span class="tag grey">—</span>'}</td>
         <td>${c.violation_tags.map((v) => `<span class="tag">${esc(v)}</span>`).join("") || '<span class="tag grey">—</span>'}</td>
-        <td><a href="${esc(c.source_url)}" target="_blank" rel="noopener">${c.doc_format === "pdf" ? "PDF" : "网页"} ↗</a></td>
+        <td class="op-cell"><a class="op" href="${href}">详情</a>
+          <a class="op ext" href="${esc(c.source_url)}" target="_blank" rel="noopener" title="协会原文">↗</a></td>
       </tr>`;
     }).join("");
     $("#case-tbody").innerHTML = rows ||
@@ -441,6 +444,10 @@
       const qs = p.toString();
       const url = location.pathname + (qs ? "?" + qs : "") + location.hash;
       try { history.replaceState(null, "", url); } catch (e) { /* 忽略 */ }
+      // 记住列表视图，详情页「返回」可回到同一筛选条件
+      try {
+        sessionStorage.setItem("fundcases:listUrl", "index.html" + (qs ? "?" + qs : ""));
+      } catch (e) { /* 忽略 */ }
     }, 260);
   }
 
@@ -491,73 +498,12 @@
       }
     });
 
+    // 点击行进入独立详情页（点击链接时尊重链接本身）
     $("#case-tbody").addEventListener("click", (e) => {
-      const el = e.target.closest(".org");
-      if (el) openModal(+el.dataset.id);
+      if (e.target.closest("a")) return;
+      const tr = e.target.closest("tr.row");
+      if (tr && tr.dataset.href) location.href = tr.dataset.href;
     });
-    $("#m-close").onclick = () => { $("#modal").hidden = true; };
-    $("#modal").addEventListener("click", (e) => {
-      if (e.target.id === "modal") $("#modal").hidden = true;
-    });
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") $("#modal").hidden = true;
-    });
-  }
-
-  function openModal(id) {
-    const c = CASES.find((x) => x.id === id);
-    if (!c) return;
-    $("#m-title").textContent = c.title;
-    const reg = c.registry_status
-      ? `<span class="reg-badge ${c.registry_status === "已注销" ? "reg-off" : "reg-on"}">协会公示·${esc(c.registry_status)}</span>`
-      : "";
-    const renamed = c.name_changed
-      ? `<span class="reg-badge reg-off" title="协会在册/注销两处均无该名称记录，推定管理人已变更名称">原名查无·已变更名称</span>`
-      : "";
-    $("#m-meta").innerHTML = [
-      `发布日期：${esc(c.date)}`, `文书类型：${esc(c.doc_type)}`,
-      `管理人类型：${esc(c.manager_type)}（${esc(c.manager_type_source)}）`,
-      `地区：${esc(c.region || "未识别")}`,
-      c.register_no ? `登记编号：${esc(c.register_no)}` : "",
-      c.legal_rep ? `法定代表人：${esc(c.legal_rep)}` : "",
-      c.member_type ? `会员类型：${esc(c.member_type)}` : "",
-      c.penalties.length ? `处分：${esc(c.penalties.join("、"))}` : "",
-      c.violation_tags.length ? `事由：${esc(c.violation_tags.join("、"))}` : "",
-      `当事人：${esc(c.parties.join("、") || "—")}`
-    ].filter(Boolean).map((t) => `<span>${t}</span>`).join("") + reg + renamed;
-    $("#m-link").href = c.source_url;
-    const regLink = $("#m-reg");
-    if (c.registry_url) { regLink.hidden = false; regLink.href = c.registry_url; }
-    else regLink.hidden = true;
-    $("#m-text").textContent = "正文加载中…";
-    $("#m-penalty").innerHTML = c.penalty_text
-      ? `<div class="pbox"><div class="ptitle">处分决定原文（用于核对措施标注）</div>
-           <div class="ptext">${esc(c.penalty_text)}</div></div>`
-      : "";
-    $("#modal").hidden = false;
-
-    const show = (t) => {
-      const body = (t || "").trim();
-      if (!body) {
-        $("#m-text").textContent = "（该案例正文为空，请点击查看协会原文）";
-        return;
-      }
-      if (curTokens.length) {
-        const box = $("#m-text");
-        box.innerHTML = hl(body, curTokens);
-        box.scrollTop = 0;
-        const m = box.querySelector("mark");
-        if (m) {                     // 定位到第一个命中词
-          const rb = m.getBoundingClientRect();
-          const bb = box.getBoundingClientRect();
-          box.scrollTop += rb.top - bb.top - 80;
-        }
-      } else $("#m-text").textContent = body;
-    };
-    if (TEXTS) return show(TEXTS[String(id)]);
-    fetch("data/texts.json").then((r) => r.json()).then((d) => {
-      TEXTS = d; show(d[String(id)]);
-    }).catch(() => show("正文加载失败，请点击查看协会原文。"));
   }
 
   fetch("data/cases.json").then((r) => r.json()).then((d) => {

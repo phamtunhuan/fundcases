@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>私募基金监管处罚案例库 | 中国证券投资基金业协会纪律处分</title>
 <meta name="description" content="收录中国证券投资基金业协会纪律处分（受处分机构）全量案例，支持按机构、年份、地区、违规类型、处分措施检索。">
-<link rel="stylesheet" href="assets/style.css?v=202610301031">
+<link rel="stylesheet" href="assets/style.css?v=202610301250">
 </head>
 <body>
 <header class="site-header">
@@ -90,7 +90,7 @@
             <th style="width:70px">地区</th>
             <th style="width:170px">处分措施</th>
             <th>违规事由</th>
-            <th style="width:70px">原文</th>
+            <th style="width:86px">操作</th>
           </tr>
         </thead>
         <tbody id="case-tbody"></tbody>
@@ -104,7 +104,7 @@
     <ul class="notes">
       <li>数据来源：中国证券投资基金业协会官网「自律管理 — 纪律处分 — 受处分机构」栏目，共 35 个列表页全量抓取。</li>
       <li>2015 年后为网页版决定书，2018 年后主要为扫描版 PDF，正文经 OCR 识别，<b>文字可能存在识别误差</b>，引用前请核对「查看原文」中的官方文件。</li>
-      <li><b>管理人类型以协会公示系统为准</b>：逐机构比对基金业协会「私募基金管理人公示」（在册）与「已注销私募基金管理人公示」登记信息，匹配率 95%；无法确认的机构回退到正文推断。详情弹窗中的「协会公示」徽标与「协会公示信息」链接可跳转核对。</li>
+      <li><b>管理人类型以协会公示系统为准</b>：逐机构比对基金业协会「私募基金管理人公示」（在册）与「已注销私募基金管理人公示」登记信息，匹配率 95%；无法确认的机构回退到正文推断。点击案例进入详情页，其中的「协会公示」徽标与「协会公示信息」链接可跳转核对。</li>
       <li>「地区」「处分措施」「违规事由」为程序依据正文与登记信息自动标注，仅供参考，不构成法律意见。</li>
       <li>本库仅作合规研究与内部风控参考，不代表监管机构立场。</li>
     </ul>
@@ -118,22 +118,6 @@
   </div>
 </footer>
 
-<div class="modal" id="modal" hidden>
-  <div class="modal-box">
-    <div class="modal-head">
-      <h3 id="m-title"></h3>
-      <button id="m-close" type="button" aria-label="关闭">×</button>
-    </div>
-    <div class="modal-meta" id="m-meta"></div>
-    <div class="penalty-box" id="m-penalty"></div>
-    <div class="modal-body"><pre id="m-text">正文加载中…</pre></div>
-    <div class="modal-foot">
-      <a id="m-link" href="#" target="_blank" rel="noopener">查看协会原文 ↗</a>
-      <a id="m-reg" href="#" target="_blank" rel="noopener" hidden>协会公示信息 ↗</a>
-    </div>
-  </div>
-</div>
-
-<script src="assets/app.js?v=202610301031"></script>
+<script src="assets/app.js?v=202610301250"></script>
 </body>
 </html>

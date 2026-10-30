@@ -119,3 +119,89 @@ table.cases tbody tr:hover{background:#f9fbfe}
   .bar-chart{height:140px}
   .h-bar{grid-template-columns:100px 1fr 34px}
 }
+
+/* ============================================================
+   案例详情页
+   ============================================================ */
+.detail-page .site-header{padding:20px 0 18px}
+.detail-page .brand h1{font-size:22px}
+.back-link{display:inline-block;font-size:12.5px;color:#cfe0f5;margin-bottom:6px}
+.back-link:hover{color:#fff;text-decoration:none}
+.header-link{color:#dbe8f8;font-size:13px}
+.header-link:hover{color:#fff}
+.loading{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:40px;text-align:center;color:var(--ink3)}
+
+.crumb{font-size:12.5px;color:var(--ink3);margin:18px 0 12px}
+.crumb a{color:var(--ink3)}
+.crumb a:hover{color:var(--brand2)}
+.crumb .sep{margin:0 7px;color:#c3ccda}
+.crumb b{color:var(--ink2);font-weight:600}
+
+.case-layout{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:18px;align-items:start}
+@media(max-width:980px){.case-layout{grid-template-columns:1fr}}
+
+.case-head{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:20px 22px 18px;margin-bottom:14px}
+.case-head h1{margin:0;font-size:23px;line-height:1.45;color:var(--brand);word-break:break-word}
+.case-head .badge-row{margin-top:10px}
+.case-head .badge-row .reg-badge{margin-left:0;margin-right:6px}
+.case-sub{margin:10px 0 0;font-size:12.5px;color:var(--ink3);line-height:1.6;word-break:break-word}
+.doc-badge{background:#eef3fa;color:#2b5c93;border:1px solid #d9e4f2}
+
+.meta-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:14px}
+.meta-item{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+.meta-item .k{display:block;font-size:11.5px;color:var(--ink3)}
+.meta-item .v{display:block;font-size:14px;font-weight:600;color:var(--ink);margin-top:2px;word-break:break-word}
+.other-parties{margin:0 0 14px;font-size:13px;color:var(--ink2)}
+
+.tag-row{display:flex;flex-wrap:wrap;gap:6px}
+.tag.big{font-size:12.5px;padding:3px 9px;border-radius:5px;margin:0}
+.tag.red.big{background:#fdf0ef;color:var(--accent);border-color:#f3d3cf}
+
+.quote{margin:0 0 12px;padding:12px 14px;background:#fdf6f5;border:1px solid #f3ddd9;border-left:3px solid var(--accent);
+  border-radius:6px;font-size:13.5px;line-height:1.8;color:#3b2a28;word-break:break-word}
+.decision summary{cursor:pointer;font-size:13px;color:var(--brand2);margin-bottom:8px}
+
+.doc{margin:0;white-space:pre-wrap;word-break:break-word;
+  font:14px/1.95 "PingFang SC","Microsoft YaHei",-apple-system,sans-serif;color:var(--ink)}
+.doc.small{font-size:13px;line-height:1.85;max-height:320px;overflow:auto;background:#fafbfd;
+  border:1px solid var(--line);border-radius:6px;padding:12px}
+.doc-tools{display:flex;align-items:center;gap:10px}
+.btn-s{padding:4px 10px;border:1px solid var(--line);background:#fff;border-radius:6px;
+  font-size:12px;color:var(--ink2);cursor:pointer}
+.btn-s:hover{background:var(--soft);color:var(--brand)}
+.btn{display:inline-block;padding:8px 14px;border-radius:7px;background:var(--brand2);color:#fff;font-size:13px}
+.btn:hover{background:var(--brand);text-decoration:none;color:#fff}
+
+.case-nav{display:flex;justify-content:space-between;gap:12px;margin:16px 0 30px;font-size:13px}
+.nav-link{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;color:var(--ink2);max-width:49%}
+.nav-link:hover{border-color:#c9d8ec;color:var(--brand2);text-decoration:none}
+
+.case-side .panel{padding:14px 16px;margin-bottom:14px}
+.case-side .panel-head{margin-bottom:10px}
+.case-side .panel-head h2{font-size:14px}
+.case-side .panel.sticky{position:sticky;top:14px}
+@media(max-width:980px){.case-side .panel.sticky{position:static}}
+
+.kv{margin:0;display:flex;flex-direction:column;gap:0}
+.kv-row{display:grid;grid-template-columns:78px 1fr;gap:8px;padding:7px 0;border-bottom:1px dashed #eef1f6;font-size:12.5px}
+.kv-row:last-child{border-bottom:none}
+.kv-row dt{color:var(--ink3)}
+.kv-row dd{margin:0;color:var(--ink);word-break:break-word}
+
+.side-links{display:flex;flex-direction:column;gap:8px}
+.side-link{font-size:12.5px}
+.side-link:hover{text-decoration:underline}
+
+.empty-state{text-align:center;padding:50px 20px}
+.empty-state h2{margin:0 0 8px;color:var(--brand);font-size:18px}
+.empty-state p{color:var(--ink3);font-size:13.5px}
+
+/* 列表操作列与整行可点击 */
+table.cases tbody tr.row{cursor:pointer}
+table.cases tbody tr.row:hover{background:#f4f8fd}
+.op-cell{white-space:nowrap}
+.op{display:inline-block;font-size:12.5px;color:var(--brand2);padding:2px 6px;border-radius:4px}
+.op:hover{background:var(--soft);text-decoration:none}
+.op.ext{color:var(--ink3)}
+a.org{font-weight:600;color:var(--ink)}
+a.org:hover{color:var(--brand2);text-decoration:underline}
