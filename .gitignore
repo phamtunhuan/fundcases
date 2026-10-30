@@ -4,3 +4,4 @@ data/ocr/
 __pycache__/
 *.pyc
 .DS_Store
+data/audit_list_diff.json
