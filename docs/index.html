@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>私募基金监管处罚案例库 | 中国证券投资基金业协会纪律处分</title>
 <meta name="description" content="收录中国证券投资基金业协会纪律处分（受处分机构）全量案例，支持按机构、年份、地区、违规类型、处分措施检索。">
-<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/style.css?v=202610301031">
 </head>
 <body>
 <header class="site-header">
@@ -47,9 +47,14 @@
     </div>
     <div class="filters">
       <div class="search-box">
-        <input type="search" id="q" placeholder="搜索机构名称 / 当事�� / 违规关键词（如：适当性、挪用、量化）">
+        <input type="search" id="q" autocomplete="off" spellcheck="false"
+               placeholder="机构 / 当事人 / 登记编号 / 违规关键词，空格分隔多个条件（如：深圳 挪用 2023）">
+        <label class="ft-toggle" title="同时检索处分决定书正文全文（首次使用需加载约 3MB）">
+          <input type="checkbox" id="f-full"><span>全文</span>
+        </label>
         <button id="clear-q" type="button">重置</button>
       </div>
+      <div class="search-tip" id="search-tip">多关键词空格分隔，全部命中才显示；<b>"引号"</b>可锁定短语。可搜机构名、当事人、登记编号、处分措施、违规事由与理由正文。</div>
       <div class="select-row">
         <label>年份<select id="f-year"></select></label>
         <label>管理人类型<select id="f-type"></select></label>
@@ -129,6 +134,6 @@
   </div>
 </div>
 
-<script src="assets/app.js"></script>
+<script src="assets/app.js?v=202610301031"></script>
 </body>
 </html>
